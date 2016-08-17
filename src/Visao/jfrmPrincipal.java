@@ -28,26 +28,47 @@ public class jfrmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jbtnCadastro = new javax.swing.JMenu();
         jbtnUsuario = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jbtnCliente = new javax.swing.JMenuItem();
+        jbtnRelatorio = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jbtnCalculadora = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jMenu1.setText("File");
+        jbtnCadastro.setText("Cadastro");
 
         jbtnUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         jbtnUsuario.setText("Usuario");
-        jMenu1.add(jbtnUsuario);
+        jbtnCadastro.add(jbtnUsuario);
 
-        jMenuItem1.setText("jMenuItem1");
-        jMenu1.add(jMenuItem1);
+        jbtnCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jbtnCliente.setText("Cliente");
+        jbtnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnClienteActionPerformed(evt);
+            }
+        });
+        jbtnCadastro.add(jbtnCliente);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jbtnCadastro);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jbtnRelatorio.setText("Relatório");
+        jMenuBar1.add(jbtnRelatorio);
+
+        jMenu3.setText("Ferramentas");
+
+        jbtnCalculadora.setText("Calculadora");
+        jbtnCalculadora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCalculadoraActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jbtnCalculadora);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -65,6 +86,19 @@ public class jfrmPrincipal extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(777, 569));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnCalculadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCalculadoraActionPerformed
+        try {
+            Runtime.getRuntime().exec("calc");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jbtnCalculadoraActionPerformed
+
+    private void jbtnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClienteActionPerformed
+        jfrmCliente frmcliente = new jfrmCliente();
+        frmcliente.setVisible(true);
+    }//GEN-LAST:event_jbtnClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,10 +136,12 @@ public class jfrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu jbtnCadastro;
+    private javax.swing.JMenuItem jbtnCalculadora;
+    private javax.swing.JMenuItem jbtnCliente;
+    private javax.swing.JMenu jbtnRelatorio;
     private javax.swing.JMenuItem jbtnUsuario;
     // End of variables declaration//GEN-END:variables
 }
