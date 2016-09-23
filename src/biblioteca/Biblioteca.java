@@ -5,8 +5,7 @@
  */
 package biblioteca;
 
-import Controle.CtrlAutor;
-import Controle.CtrlGenero;
+import Util.ValidaCPF;
 
 /**
  *
@@ -18,7 +17,6 @@ public class Biblioteca {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
     }    
     
 }
