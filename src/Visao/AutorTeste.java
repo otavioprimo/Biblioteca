@@ -27,6 +27,7 @@ public class AutorTeste extends javax.swing.JFrame {
         initComponents();
         listarTabelas();
         listarAutoresComboBox();
+        
     }
 
     /**
@@ -43,6 +44,8 @@ public class AutorTeste extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtableGenero = new javax.swing.JTable();
         jcbAutores = new javax.swing.JComboBox<>();
+        jtxtId = new javax.swing.JTextField();
+        jtxtNomeAutor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +60,11 @@ public class AutorTeste extends javax.swing.JFrame {
 
             }
         ));
+        jtableAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtableAutorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtableAutor);
 
         jtableGenero.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,6 +82,12 @@ public class AutorTeste extends javax.swing.JFrame {
 
         jcbAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jtxtNomeAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtNomeAutorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +98,12 @@ public class AutorTeste extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbAutores, 0, 181, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbAutores, 0, 181, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jtxtNomeAutor))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -93,7 +112,12 @@ public class AutorTeste extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jcbAutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcbAutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtxtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -101,6 +125,14 @@ public class AutorTeste extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtxtNomeAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNomeAutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtNomeAutorActionPerformed
+
+    private void jtableAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableAutorMouseClicked
+        preencherCampos();
+    }//GEN-LAST:event_jtableAutorMouseClicked
 
     /**
      * @param args the command line arguments
@@ -112,14 +144,19 @@ public class AutorTeste extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
     }
-
+    
     private void listarAutoresComboBox() {
-       CtrlAutor.adicionarAutorCB(jcbAutores);
-
+        CtrlAutor.adicionarAutorCB(jcbAutores);        
     }
-
+    
+    public void preencherCampos() {
+        jtxtId.setText("" + jtableAutor.getValueAt(jtableAutor.getSelectedRow(),0));
+        jtxtNomeAutor.setText("" +jtableAutor.getValueAt(jtableAutor.getSelectedRow(), 1));        
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -158,5 +195,7 @@ public class AutorTeste extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcbAutores;
     private javax.swing.JTable jtableAutor;
     private javax.swing.JTable jtableGenero;
+    private javax.swing.JTextField jtxtId;
+    private javax.swing.JTextField jtxtNomeAutor;
     // End of variables declaration//GEN-END:variables
 }

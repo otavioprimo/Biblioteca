@@ -10,8 +10,6 @@ import Modelo.Autor;
 import java.util.List;
 import java.util.Arrays;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -49,14 +47,14 @@ public class tabelaAutor extends AbstractTableModel implements TableModelListene
 
     @Override
     public Object getValueAt(int row, int column) {
-        Autor autor = autores.get(row);
+       Autor autor = autores.get(row);
         switch (column) {
             case 0:
                 return autor.getIdAutor();
             case 1:
                 return autor.getNome();
         }
-        return null;
+        return null;             
     }
 
     @Override

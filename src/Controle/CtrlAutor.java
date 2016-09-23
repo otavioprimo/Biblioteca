@@ -66,21 +66,7 @@ public class CtrlAutor {
         }
     }
 
-    public static void buscarAutor(JTable table) {
-        /*DaoAutor dao = new DaoAutor();
-        Autor autor = new Autor();
-        try {
-            ArrayList<Autor> lista = dao.listar();
-
-            for (Autor a : lista) {
-                System.out.println("Código: " + a.getIdAutor());
-                System.out.println("Nome: " + a.getNome());
-                System.out.println();                
-
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }*/
+    public static void buscarAutor(JTable table) {       
 
         try {
             DaoAutor dao = new DaoAutor();
@@ -89,6 +75,10 @@ public class CtrlAutor {
         } catch (SQLException ex) {
             Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void PreencherCampos(JTable jTable){
+        
     }
 
     public static void adicionarAutorCB(JComboBox comboBox) {
