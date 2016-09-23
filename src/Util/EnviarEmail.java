@@ -1,4 +1,4 @@
-package Resources;
+package Util;
 
 import java.util.Properties;
 import javax.mail.Address;
