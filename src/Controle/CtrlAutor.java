@@ -77,9 +77,6 @@ public class CtrlAutor {
         }
     }
     
-    public static void PreencherCampos(JTable jTable){
-        
-    }
 
     public static void adicionarAutorCB(JComboBox comboBox) {
 
