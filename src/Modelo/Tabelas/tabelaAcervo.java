@@ -5,11 +5,12 @@
  */
 package Modelo.Tabelas;
 
-import DAO.DaoAutor;
-import Modelo.Autor;
-import java.util.List;
-import java.util.Arrays;
+import DAO.DaoAcervo;
+import Modelo.Acervo;
+
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -18,26 +19,22 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Usuário
  */
-public class tabelaAutor extends AbstractTableModel implements TableModelListener {
+public class tabelaAcervo extends AbstractTableModel implements TableModelListener {
 
-    private final List<Autor> autores;
-    private final DaoAutor dao;
+    private final List<Acervo> acervos;
+    private final DaoAcervo dao;
     private final List<String> colunas;
 
-    public tabelaAutor(DaoAutor daoAutor, boolean filtro, Autor a) throws SQLException {
-        this.dao = daoAutor;
-        colunas = Arrays.asList("Id", "Nome");
+    public tabelaAcervo(DaoAcervo daoAcervo) throws SQLException {
+        this.dao = daoAcervo;
+        this.acervos = daoAcervo.listar();
+        colunas = Arrays.asList("IdItem", "Titulo", "Quantidade", "Data de Entrada");
         this.addTableModelListener(this);
-        if (!filtro) {
-            this.autores = daoAutor.listar();
-        } else {
-            this.autores = daoAutor.listarPorNome(a);
-        }
     }
 
     @Override
     public int getRowCount() {
-        return autores.size();
+        return acervos.size();
     }
 
     @Override
@@ -45,19 +42,22 @@ public class tabelaAutor extends AbstractTableModel implements TableModelListene
         return colunas.size();
     }
 
-    @Override
     public String getColumnName(int i) {
         return colunas.get(i);
     }
 
     @Override
     public Object getValueAt(int row, int column) {
-        Autor autor = autores.get(row);
+        Acervo acervo = acervos.get(row);
         switch (column) {
             case 0:
-                return autor.getIdAutor();
+                return acervo.getIdItem();
             case 1:
-                return autor.getNome();
+                return acervo.getLivro().getTitulo();
+            case 2:
+                return acervo.getQuantidade();
+            case 3:
+                return acervo.getDt_entrada();
         }
         return null;
     }

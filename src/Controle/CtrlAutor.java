@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -33,6 +34,7 @@ public class CtrlAutor {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar novo Autor\n" + e.getMessage());
         }
     }
 
@@ -48,6 +50,7 @@ public class CtrlAutor {
             dao.excluir(autor);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao excluir novo Autor \n" + e.getMessage());
         }
     }
 
@@ -63,20 +66,58 @@ public class CtrlAutor {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar novo Autor \n" + e.getMessage());
         }
     }
 
-    public static void buscarAutor(JTable table) {       
+    public static void listarAutor(JTable table) {
 
         try {
             DaoAutor dao = new DaoAutor();
-            tabelaAutor tm = new tabelaAutor(dao);
+            Autor autor = new Autor();
+            tabelaAutor tm = new tabelaAutor(dao,false,autor);
             table.setModel(tm);
-        } catch (SQLException ex) {
-            Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
         }
     }
     
+    public static void listarAutorNome(JTable table,String nomeAutor) {
+
+        try {
+            DaoAutor dao = new DaoAutor();
+            Autor autor = new Autor();
+            autor.setNome(nomeAutor);
+            
+            tabelaAutor tm = new tabelaAutor(dao,true,autor);
+            table.setModel(tm);
+            
+        } catch (SQLException e) {
+            Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
+        }
+    }
+    
+     /*public static void listarAutorNome(String nome) {
+         DaoAutor dao = new DaoAutor();
+         Autor autor = new Autor();
+         autor.setNome(nome);
+        try {
+            ArrayList<Autor> lista = dao.listarPorNome(autor);
+            for (Autor a:lista) {
+                System.out.println("ID: " + a.getIdAutor());
+                System.out.println("Nome: " + a.getNome());
+                System.out.println("--------------------------------------");                
+            }
+            
+        } catch (SQLException e) {
+            Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
+        }
+    }*/
+
+   
 
     public static void adicionarAutorCB(JComboBox comboBox) {
 
@@ -87,6 +128,7 @@ public class CtrlAutor {
             dao.listarComboBox(comboBox);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao listar ComboBox com Autores \n" + e.getMessage());
         }
 
     }

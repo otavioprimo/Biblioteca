@@ -96,9 +96,8 @@ public class DaoAutor {
         return lista;
     }
 
-    public void listarComboBox(JComboBox comboBox) throws SQLException{
-        
-        
+    public void listarComboBox(JComboBox comboBox) throws SQLException {
+
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT Nome ");
@@ -109,15 +108,40 @@ public class DaoAutor {
         comboBox.addItem("Escolha Autor");
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         ResultSet resultado = pst.executeQuery();
-        try {
-            while (resultado.next()) {
-                
-                comboBox.addItem(resultado.getString("Nome"));
-                comboBox.updateUI();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+
+        while (resultado.next()) {
+
+            comboBox.addItem(resultado.getString("Nome"));
+            comboBox.updateUI();
         }
+
+    }
+
+    public ArrayList<Autor> listarPorNome(Autor autor) throws SQLException {
+        connOracle.conectar();
+        ArrayList<Autor> lista = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT IDAutor,Nome ");
+        sql.append("FROM Autor ");
+        sql.append("WHERE Nome LIKE UPPER(?) ");
+        sql.append("ORDER BY IDAutor ASC ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+
+        pst.setString(1, "%" + autor.getNome() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        while (resultado.next()) {
+            Autor a = new Autor();
+            a.setIdAutor(resultado.getInt("IDAutor"));
+            a.setNome(resultado.getString("Nome"));
+
+            lista.add(a);
+        }
+        connOracle.desconectar();
+
+        return lista;
     }
 
 }

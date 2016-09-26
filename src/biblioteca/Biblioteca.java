@@ -5,7 +5,8 @@
  */
 package biblioteca;
 
-import Util.ValidaCPF;
+import Controle.CtrlAcervo;
+import Controle.CtrlAutor;
 
 /**
  *
@@ -17,6 +18,8 @@ public class Biblioteca {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    }    
-    
+               
+        //CtrlAutor.listarAutorNome("sasad");
+    }
+
 }

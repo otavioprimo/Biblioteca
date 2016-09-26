@@ -24,11 +24,15 @@ public class tabelaGenero extends AbstractTableModel implements TableModelListen
     private final DaoGenero dao;
     private final List<String> colunas;
 
-    public tabelaGenero(DaoGenero daoGenero) throws SQLException {
+    public tabelaGenero(DaoGenero daoGenero, boolean filtro, Genero g) throws SQLException {
         this.dao = daoGenero;
-        this.generos = daoGenero.listar();
         colunas = Arrays.asList("Id", "Tipo");
         this.addTableModelListener(this);
+        if (!filtro) {
+            this.generos = daoGenero.listar();
+        } else {
+            this.generos = daoGenero.listarPorTipo(g);
+        }
     }
 
     @Override

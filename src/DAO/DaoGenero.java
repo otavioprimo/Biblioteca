@@ -68,7 +68,7 @@ public class DaoGenero {
 
     public ArrayList<Genero> listar() throws SQLException {
         ArrayList<Genero> lista = new ArrayList<>();
-        
+
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT IDGenero, tipo ");
@@ -86,7 +86,34 @@ public class DaoGenero {
             lista.add(genero);
         }
         connOracle.desconectar();
+
+        return lista;
+    }
+
+    public ArrayList<Genero> listarPorTipo(Genero genero) throws SQLException {
+        connOracle.conectar();
+        ArrayList<Genero> lista = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT IDGenero, tipo ");
+        sql.append("FROM Genero ");
+        sql.append("WHERE Tipo LIKE UPPER(?) ");
+        sql.append("ORDER BY IDGenero ASC ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + genero.getTipo() + "%");
         
+        ResultSet resultado = pst.executeQuery();
+
+        while (resultado.next()) {
+            Genero g = new Genero();
+            g.setIdGenero(resultado.getInt("IDGenero"));
+            g.setTipo(resultado.getString("Tipo"));
+
+            lista.add(g);
+        }
+        connOracle.desconectar();
+
         return lista;
     }
 }

@@ -7,8 +7,12 @@ package DAO;
 
 import Conexao.ConnectionFactory;
 import Modelo.Acervo;
+import Modelo.Livro;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,10 +27,10 @@ public class DaoAcervo {
         connOracle.conectar();
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN ADD_ACERVO(SQ_ACERVO.NEXTVAL,?,?,?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_ACERVO(SQ_ACERVO.NEXTVAL,?,?,sysdate); END;");
         cs.setInt(1, acervo.getLivro().getIdLivro());
         cs.setInt(2, acervo.getQuantidade());
-        cs.setString(3, acervo.getDt_entrada());
+        //cs.setString(3, acervo.getDt_entrada());
         cs.execute();
         JOptionPane.showMessageDialog(null, "Novo item adicionado ao acervo");
 
@@ -47,21 +51,56 @@ public class DaoAcervo {
         connOracle.desconectar();
     }
 
-    public void alterar(Acervo acervo,String nomeAnterior, int idPar) throws SQLException {
+    public void alterar(Acervo acervo, String nomeAtual, int idPar) throws SQLException {
 
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,?,?,?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,sysdate,?,?); END;");
         cs.setInt(1, acervo.getIdItem());
         cs.setInt(2, acervo.getLivro().getIdLivro());
         cs.setInt(3, acervo.getQuantidade());
-        cs.setString(4, acervo.getDt_entrada());
-        cs.setString(5, nomeAnterior);
-        cs.setInt(6, idPar);
-        cs.execute();      
-                
+        //cs.setString(4, acervo.getDt_entrada());
+        cs.setString(4, nomeAtual);
+        cs.setInt(5, idPar);
+        cs.execute();
+
+        JOptionPane.showMessageDialog(null, "Item alterado no acervo");
+
         connOracle.desconectar();
+    }
+
+    public ArrayList<Acervo> listar() throws SQLException {
+
+        connOracle.conectar();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd, A.Dt_Entrada ");
+        sql.append("FROM Acervo A ");
+        sql.append("INNER JOIN LIVRO L ");
+        sql.append("ON A.IDLivro = L.IDLivro ");
+        sql.append("ORDER BY A.IDItem ASC ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Acervo> lista = new ArrayList<Acervo>();
+
+        while (resultado.next()) {
+
+            Livro livro = new Livro();
+            livro.setIdLivro(resultado.getInt("IDLivro"));
+            livro.setTitulo(resultado.getString("Titulo"));
+
+            Acervo acervo = new Acervo();
+            acervo.setIdItem(resultado.getInt("IDItem"));
+            acervo.setQuantidade(resultado.getInt("Qtd"));
+            acervo.setLivro(livro);
+            acervo.setDt_entrada(resultado.getString("Dt_Entrada"));
+
+            lista.add(acervo);
+        }
+
+        return lista;
     }
 
 }

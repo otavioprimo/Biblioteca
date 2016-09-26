@@ -5,6 +5,7 @@
  */
 package Visao;
 
+import Controle.CtrlAcervo;
 import Controle.CtrlAutor;
 import Controle.CtrlGenero;
 import DAO.DaoAutor;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,14 +22,16 @@ import javax.swing.JComboBox;
  */
 public class AutorTeste extends javax.swing.JFrame {
 
+    private int idAutorAtual;
+    private String nomeAutorAtual;
+
     /**
      * Creates new form AutorTeste
      */
     public AutorTeste() {
         initComponents();
-        listarTabelas();
-        listarAutoresComboBox();
-        
+        listarTabelaAutor();
+
     }
 
     /**
@@ -41,13 +45,16 @@ public class AutorTeste extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableAutor = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jtableGenero = new javax.swing.JTable();
-        jcbAutores = new javax.swing.JComboBox<>();
         jtxtId = new javax.swing.JTextField();
         jtxtNomeAutor = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jtxtPesquisarAutor = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jtableAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,63 +74,123 @@ public class AutorTeste extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtableAutor);
 
-        jtableGenero.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
+        jtxtId.setFocusable(false);
+        jtxtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtIdActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jtableGenero);
-
-        jcbAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        });
 
         jtxtNomeAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtxtNomeAutorActionPerformed(evt);
             }
         });
+        jtxtNomeAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtxtNomeAutorKeyReleased(evt);
+            }
+        });
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Limpar Campos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jtxtPesquisarAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtPesquisarAutorActionPerformed(evt);
+            }
+        });
+        jtxtPesquisarAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtxtPesquisarAutorKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Pesquisar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbAutores, 0, 181, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jtxtNomeAutor))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnNovo, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jtxtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtPesquisarAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(33, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jcbAutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 16, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtxtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNovo)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEditar)
+                            .addComponent(btnExcluir))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtxtPesquisarAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(744, 345));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtxtNomeAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNomeAutorActionPerformed
@@ -134,29 +201,68 @@ public class AutorTeste extends javax.swing.JFrame {
         preencherCampos();
     }//GEN-LAST:event_jtableAutorMouseClicked
 
+    private void jtxtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtIdActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        CtrlAutor.editar(Integer.parseInt(jtxtId.getText().trim()), jtxtNomeAutor.getText().trim(), nomeAutorAtual, idAutorAtual);
+        listarTabelaAutor();
+        jtxtId.setText("");
+        jtxtNomeAutor.setText("");
+        nomeAutorAtual = "";
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        CtrlAutor.excluir(idAutorAtual, nomeAutorAtual);
+        listarTabelaAutor();
+        jtxtId.setText("");
+        jtxtNomeAutor.setText("");
+        nomeAutorAtual = "";
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        CtrlAutor.salvar(jtxtNomeAutor.getText().trim());
+        listarTabelaAutor();
+        jtxtId.setText("");
+        jtxtNomeAutor.setText("");
+        nomeAutorAtual = "";
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jtxtId.setText("");
+        jtxtNomeAutor.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jtxtNomeAutorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNomeAutorKeyReleased
+        
+    }//GEN-LAST:event_jtxtNomeAutorKeyReleased
+
+    private void jtxtPesquisarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPesquisarAutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtPesquisarAutorActionPerformed
+
+    private void jtxtPesquisarAutorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisarAutorKeyReleased
+        CtrlAutor.listarAutorNome(jtableAutor, jtxtPesquisarAutor.getText().trim());
+    }//GEN-LAST:event_jtxtPesquisarAutorKeyReleased
+
     /**
      * @param args the command line arguments
      */
-    private void listarTabelas() {
-        try {
-            CtrlAutor.buscarAutor(jtableAutor);
-            CtrlGenero.buscarGenero(jtableGenero);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
+    private void listarTabelaAutor() {
+
+        CtrlAutor.listarAutor(jtableAutor);
+
     }
-    
-    private void listarAutoresComboBox() {
-        CtrlAutor.adicionarAutorCB(jcbAutores);        
-    }
-    
+
     public void preencherCampos() {
-        jtxtId.setText("" + jtableAutor.getValueAt(jtableAutor.getSelectedRow(),0));
-        jtxtNomeAutor.setText("" +jtableAutor.getValueAt(jtableAutor.getSelectedRow(), 1));        
-        
+        jtxtId.setText("" + jtableAutor.getValueAt(jtableAutor.getSelectedRow(), 0));
+        jtxtNomeAutor.setText("" + jtableAutor.getValueAt(jtableAutor.getSelectedRow(), 1));
+        idAutorAtual = Integer.parseInt(jtxtId.getText());
+        nomeAutorAtual = jtxtNomeAutor.getText();
+
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -190,12 +296,15 @@ public class AutorTeste extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JComboBox<String> jcbAutores;
     private javax.swing.JTable jtableAutor;
-    private javax.swing.JTable jtableGenero;
     private javax.swing.JTextField jtxtId;
     private javax.swing.JTextField jtxtNomeAutor;
+    private javax.swing.JTextField jtxtPesquisarAutor;
     // End of variables declaration//GEN-END:variables
 }
