@@ -51,12 +51,12 @@ public class DaoAcervo {
         connOracle.desconectar();
     }
 
-    public void alterar(Acervo acervo, String nomeAtual, int idPar) throws SQLException {
+    public void editar(Acervo acervo, String nomeAtual, int idPar) throws SQLException {
 
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,sysdate,?,?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,?,?); END;");
         cs.setInt(1, acervo.getIdItem());
         cs.setInt(2, acervo.getLivro().getIdLivro());
         cs.setInt(3, acervo.getQuantidade());
@@ -74,7 +74,7 @@ public class DaoAcervo {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd, A.Dt_Entrada ");
+        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada ");
         sql.append("FROM Acervo A ");
         sql.append("INNER JOIN LIVRO L ");
         sql.append("ON A.IDLivro = L.IDLivro ");

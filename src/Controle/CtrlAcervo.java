@@ -56,7 +56,7 @@ public class CtrlAcervo {
         }
     }
 
-    public static void editar(int novoIdAcervo, int novoIdLivro, int novaQtd, int idEditar, String nomeAtual) {
+    public static void editar(int novoIdAcervo, int novoIdLivro, int novaQtd,String novaDataEntrada, int idEditar, String nomeAtual) {
         Acervo acervo = new Acervo();
         Livro livro = new Livro();
 
@@ -66,10 +66,10 @@ public class CtrlAcervo {
             acervo.setIdItem(novoIdAcervo);
             acervo.setLivro(livro);
             acervo.setQuantidade(novaQtd);
-            //acervo.setDt_entrada(novaDataEntrad);
+            acervo.setDt_entrada(novaDataEntrada);
 
             DaoAcervo dao = new DaoAcervo();
-            dao.alterar(acervo, nomeAtual, idEditar);
+            dao.editar(acervo, nomeAtual, idEditar);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao editar novo item \n" + e.getMessage());

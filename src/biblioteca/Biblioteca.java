@@ -6,7 +6,6 @@
 package biblioteca;
 
 import Controle.CtrlAcervo;
-import Controle.CtrlAutor;
 
 /**
  *
@@ -18,8 +17,13 @@ public class Biblioteca {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-               
-        //CtrlAutor.listarAutorNome("sasad");
+
+        //CtrlAcervo.editar(1, 1, 10, "12/09/2016", 5, "CRONCIAS DO SASAD");
+        //CtrlAcervo.salvar(1, 7, "26/09/2016");
+        //CtrlAcervo.excluir(1, "CRONICAS DO PERERA");
+       //CtrlAutor.excluir(46, "sei la");
+      // CtrlAcervo.salvar(2, 15);
     }
+    
 
 }
