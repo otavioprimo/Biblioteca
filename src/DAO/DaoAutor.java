@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,7 +31,6 @@ public class DaoAutor {
         cs = connOracle.conn.prepareCall("BEGIN ADD_AUTOR(SQ_AUTOR.NEXTVAL,UPPER(?)); END;");
         cs.setString(1, autor.getNome());
         cs.execute();
-        JOptionPane.showMessageDialog(null, "Autor salvo com sucesso");
 
         connOracle.desconectar();
     }
@@ -47,8 +45,6 @@ public class DaoAutor {
         cs.setInt(1, autor.getIdAutor());
         cs.setString(2, autor.getNome());
         cs.execute();
-
-        JOptionPane.showMessageDialog(null, "Autor excluido com sucesso");
 
         connOracle.desconectar();
     }
@@ -65,8 +61,6 @@ public class DaoAutor {
         cs.setString(3, nomeAnt);
         cs.setInt(4, idNovo);
         cs.execute();
-
-        JOptionPane.showMessageDialog(null, "Autor editado com sucesso");
 
         connOracle.desconectar();
 

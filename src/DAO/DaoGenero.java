@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +29,6 @@ public class DaoGenero {
         cs = connOracle.conn.prepareCall("BEGIN ADD_GENERO(SQ_AUTOR.NEXTVAL,UPPER(?)); END;");
         cs.setString(1, genero.getTipo());
         cs.execute();
-        JOptionPane.showMessageDialog(null, "Genero salvo com sucesso");
 
         connOracle.desconectar();
     }
@@ -43,7 +41,6 @@ public class DaoGenero {
         cs.setInt(1, genero.getIdGenero());
         cs.setString(2, genero.getTipo());
         cs.execute();
-        JOptionPane.showMessageDialog(null, "Genero excluido com sucesso");
 
         connOracle.desconectar();
 
@@ -60,8 +57,6 @@ public class DaoGenero {
         cs.setString(3, tipoAnt);
         cs.setInt(4, idNovo);
         cs.execute();
-
-        JOptionPane.showMessageDialog(null, "Genero editado com sucesso");
 
         connOracle.desconectar();
     }
@@ -102,7 +97,7 @@ public class DaoGenero {
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, "%" + genero.getTipo() + "%");
-        
+
         ResultSet resultado = pst.executeQuery();
 
         while (resultado.next()) {

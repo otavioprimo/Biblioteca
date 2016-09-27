@@ -10,7 +10,6 @@ import Modelo.Livro;
 import DAO.DaoAcervo;
 import Modelo.Tabelas.tabelaAcervo;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -34,6 +33,7 @@ public class CtrlAcervo {
 
             DaoAcervo dao = new DaoAcervo();
             dao.salvar(acervo);
+            JOptionPane.showMessageDialog(null, "Novo item adicionado ao acervo");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao adicionar novo item \n" + e.getMessage());
@@ -50,6 +50,7 @@ public class CtrlAcervo {
 
             DaoAcervo dao = new DaoAcervo();
             dao.excluir(acervo);
+            JOptionPane.showMessageDialog(null, "Item deletado do acervo");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao excluir novo item \n" + e.getMessage());
@@ -70,6 +71,7 @@ public class CtrlAcervo {
 
             DaoAcervo dao = new DaoAcervo();
             dao.editar(acervo, nomeAtual, idEditar);
+            JOptionPane.showMessageDialog(null, "Item alterado no acervo");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao editar novo item \n" + e.getMessage());

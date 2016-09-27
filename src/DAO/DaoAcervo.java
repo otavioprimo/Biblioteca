@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,7 +31,7 @@ public class DaoAcervo {
         cs.setInt(2, acervo.getQuantidade());
         //cs.setString(3, acervo.getDt_entrada());
         cs.execute();
-        JOptionPane.showMessageDialog(null, "Novo item adicionado ao acervo");
+        
 
         connOracle.desconectar();
     }
@@ -46,7 +45,7 @@ public class DaoAcervo {
         cs.setInt(1, acervo.getIdItem());
         cs.setString(2, acervo.getLivro().getTitulo());
         cs.execute();
-        JOptionPane.showMessageDialog(null, "Item deletado do acervo");
+        
 
         connOracle.desconectar();
     }
@@ -65,7 +64,7 @@ public class DaoAcervo {
         cs.setInt(5, idPar);
         cs.execute();
 
-        JOptionPane.showMessageDialog(null, "Item alterado no acervo");
+        
 
         connOracle.desconectar();
     }

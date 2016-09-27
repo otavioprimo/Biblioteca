@@ -19,7 +19,7 @@ public class Biblioteca {
     public static void main(String[] args) {
 
         //CtrlAcervo.editar(1, 1, 10, "12/09/2016", 5, "CRONCIAS DO SASAD");
-        //CtrlAcervo.salvar(1, 7, "26/09/2016");
+        //CtrlAcervo.salvar(24, 13);
         //CtrlAcervo.excluir(1, "CRONICAS DO PERERA");
        //CtrlAutor.excluir(46, "sei la");
       // CtrlAcervo.salvar(2, 15);
