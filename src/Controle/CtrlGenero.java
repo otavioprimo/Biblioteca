@@ -55,11 +55,10 @@ public class CtrlGenero {
         }
     }
 
-    public static void editar(int idNovo, String tipoNovo, String tipoAtual, int idAtual) {
+    public static void editar(String tipoNovo, String tipoAtual, int idAtual) {
         Genero genero = new Genero();
 
-        try {
-            genero.setIdGenero(idNovo);
+        try {            
             genero.setTipo(tipoNovo);
 
             DaoGenero dao = new DaoGenero();

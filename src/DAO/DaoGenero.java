@@ -26,7 +26,7 @@ public class DaoGenero {
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN ADD_GENERO(SQ_AUTOR.NEXTVAL,UPPER(?)); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_GENERO(UPPER(?)); END;");
         cs.setString(1, genero.getTipo());
         cs.execute();
 
@@ -46,16 +46,15 @@ public class DaoGenero {
 
     }
 
-    public void editar(Genero genero, String tipoAnt, int idNovo) throws SQLException {
+    public void editar(Genero genero, String tipoAnt, int idPar) throws SQLException {
         connOracle.conectar();
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_GENERO(?,UPPER(?),?,?); END;");
-        cs.setInt(1, genero.getIdGenero());
-        cs.setString(2, genero.getTipo());
-        cs.setString(3, tipoAnt);
-        cs.setInt(4, idNovo);
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_GENERO(UPPER(?),?,?); END;");
+        cs.setString(1, genero.getTipo());
+        cs.setString(2, tipoAnt);
+        cs.setInt(3, idPar);
         cs.execute();
 
         connOracle.desconectar();

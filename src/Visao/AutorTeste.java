@@ -48,6 +48,7 @@ public class AutorTeste extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jtableAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,7 +152,7 @@ public class AutorTeste extends javax.swing.JFrame {
                                 .addComponent(jtxtPesquisarAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnExcluir))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +161,7 @@ public class AutorTeste extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtxtNomeAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jtxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(29, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -212,7 +213,7 @@ public class AutorTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtIdActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        CtrlAutor.editar(Integer.parseInt(jtxtId.getText().trim()), jtxtNomeAutor.getText().trim(), nomeAutorAtual, idAutorAtual);
+        CtrlAutor.editar(jtxtNomeAutor.getText().trim(), nomeAutorAtual, idAutorAtual);
         listarTabelaAutor();
         jtxtId.setText("");
         jtxtNomeAutor.setText("");

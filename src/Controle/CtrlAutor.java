@@ -51,15 +51,14 @@ public class CtrlAutor {
             JOptionPane.showMessageDialog(null, "Autor excluido com sucesso");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao excluir novo Autor \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao excluir Autor \n" + e.getMessage());
         }
     }
 
-    public static void editar(int idNovo, String nomeNovo, String nomeAtual, int idAtual) {
+    public static void editar(String nomeNovo, String nomeAtual, int idAtual) {
         Autor autor = new Autor();
 
-        try {
-            autor.setIdAutor(idNovo);
+        try {            
             autor.setNome(nomeNovo);
 
             DaoAutor dao = new DaoAutor();
@@ -68,7 +67,7 @@ public class CtrlAutor {
             JOptionPane.showMessageDialog(null, "Autor editado com sucesso");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao editar novo Autor \n Verifique se o Autor já existe!\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao editar Autor \n Verifique se o Autor já existe!\n" + e.getMessage());
         }
     }
 

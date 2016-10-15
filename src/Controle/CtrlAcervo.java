@@ -57,14 +57,13 @@ public class CtrlAcervo {
         }
     }
 
-    public static void editar(int novoIdAcervo, int novoIdLivro, int novaQtd,String novaDataEntrada, int idEditar, String nomeAtual) {
+    public static void editar(int novoIdLivro, int novaQtd, String novaDataEntrada, int idEditar, String nomeAtual) {
         Acervo acervo = new Acervo();
         Livro livro = new Livro();
 
         try {
             livro.setIdLivro(novoIdLivro);
 
-            acervo.setIdItem(novoIdAcervo);
             acervo.setLivro(livro);
             acervo.setQuantidade(novaQtd);
             acervo.setDt_entrada(novaDataEntrada);
@@ -80,22 +79,24 @@ public class CtrlAcervo {
 
     public static void listarAcervo(JTable table) {
         DaoAcervo dao = new DaoAcervo();
-        /*try {
-            ArrayList<Acervo> lista = dao.listar();
-            for (Acervo a : lista) {
-                System.out.println("IdItem: " + a.getIdItem());
-                System.out.println("Titulo: " + a.getLivro().getTitulo());
-                System.out.println("Quantidade: " + a.getQuantidade());
-                System.out.println("Data De Entrada: " + a.getDt_entrada());
-                System.out.println("--------------------------------------");
-            }
+        Acervo acervo = new Acervo();
+        try {
+            tabelaAcervo tm = new tabelaAcervo(dao, acervo, 1);
+            table.setModel(tm);
         } catch (SQLException e) {
-            System.err.println(e);
-            //Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
-        }*/
+            Logger.getLogger(CtrlAcervo.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao listar item \n" + e.getMessage());
+        }
+
+    }
+
+    public static void listarAcervoTitulo(JTable table, String nomeTitulo) {
+        DaoAcervo dao = new DaoAcervo();
+        Acervo acervo = new Acervo();
+        acervo.getLivro().setTitulo(nomeTitulo);
 
         try {
-            tabelaAcervo tm = new tabelaAcervo(dao);            
+            tabelaAcervo tm = new tabelaAcervo(dao, acervo, 2);
             table.setModel(tm);
         } catch (SQLException e) {
             Logger.getLogger(CtrlAcervo.class.getName()).log(Level.SEVERE, null, e);

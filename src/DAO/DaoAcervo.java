@@ -26,7 +26,7 @@ public class DaoAcervo {
         connOracle.conectar();
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN ADD_ACERVO(SQ_ACERVO.NEXTVAL,?,?,sysdate); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_ACERVO(?,?,sysdate); END;");
         cs.setInt(1, acervo.getLivro().getIdLivro());
         cs.setInt(2, acervo.getQuantidade());
         //cs.setString(3, acervo.getDt_entrada());
@@ -55,16 +55,13 @@ public class DaoAcervo {
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,?,?); END;");
-        cs.setInt(1, acervo.getIdItem());
-        cs.setInt(2, acervo.getLivro().getIdLivro());
-        cs.setInt(3, acervo.getQuantidade());
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,?); END;");        
+        cs.setInt(1, acervo.getLivro().getIdLivro());
+        cs.setInt(2, acervo.getQuantidade());
         //cs.setString(4, acervo.getDt_entrada());
-        cs.setString(4, nomeAtual);
-        cs.setInt(5, idPar);
-        cs.execute();
-
-        
+        cs.setString(3, nomeAtual);
+        cs.setInt(4, idPar);
+        cs.execute();        
 
         connOracle.desconectar();
     }
@@ -75,7 +72,7 @@ public class DaoAcervo {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada ");
         sql.append("FROM Acervo A ");
-        sql.append("INNER JOIN LIVRO L ");
+        sql.append("JOIN LIVRO L ");
         sql.append("ON A.IDLivro = L.IDLivro ");
         sql.append("ORDER BY A.IDItem ASC ");
 
@@ -97,6 +94,41 @@ public class DaoAcervo {
             acervo.setDt_entrada(resultado.getString("Dt_Entrada"));
 
             lista.add(acervo);
+        }
+
+        return lista;
+    }
+    
+    public ArrayList<Acervo> listarPeloTitulo(Acervo acervo) throws SQLException {
+
+        connOracle.conectar();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada ");
+        sql.append("FROM Acervo A ");
+        sql.append("JOIN LIVRO L ");
+        sql.append("ON A.IDLivro = L.IDLivro ");
+        sql.append("WHERE L.Titulo LIKE UPPER(?) ");
+        sql.append("ORDER BY A.IDItem ASC ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + acervo.getLivro().getTitulo() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Acervo> lista = new ArrayList<Acervo>();
+
+        while (resultado.next()) {
+
+            Livro livro = new Livro();
+            livro.setIdLivro(resultado.getInt("IDLivro"));
+            livro.setTitulo(resultado.getString("Titulo"));
+
+            Acervo a = new Acervo();
+            a.setIdItem(resultado.getInt("IDItem"));
+            a.setQuantidade(resultado.getInt("Qtd"));
+            a.setLivro(livro);
+            a.setDt_entrada(resultado.getString("Dt_Entrada"));
+
+            lista.add(a);
         }
 
         return lista;

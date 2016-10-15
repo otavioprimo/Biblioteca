@@ -58,6 +58,7 @@ public class GeneroTeste extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jTableGenero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,7 +211,7 @@ public class GeneroTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableGeneroMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        CtrlGenero.editar(Integer.parseInt(jtxtId.getText().trim()), jtxtTipo.getText().trim(), tipoAtual, idAtual);
+        CtrlGenero.editar(jtxtTipo.getText().trim(), tipoAtual, idAtual);
         listarTabelaGenero();
         jtxtId.setText("");
         jtxtTipo.setText("");

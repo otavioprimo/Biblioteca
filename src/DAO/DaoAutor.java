@@ -28,7 +28,7 @@ public class DaoAutor {
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN ADD_AUTOR(SQ_AUTOR.NEXTVAL,UPPER(?)); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_AUTOR(UPPER(?)); END;");
         cs.setString(1, autor.getNome());
         cs.execute();
 
@@ -49,17 +49,16 @@ public class DaoAutor {
         connOracle.desconectar();
     }
 
-    public void editar(Autor autor, String nomeAnt, int idNovo) throws SQLException {
+    public void editar(Autor autor, String nomeAnt, int idPar) throws SQLException {
 
         connOracle.conectar();
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_AUTOR(?,UPPER(?),?,?); END;");
-        cs.setInt(1, autor.getIdAutor());
-        cs.setString(2, autor.getNome());
-        cs.setString(3, nomeAnt);
-        cs.setInt(4, idNovo);
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_AUTOR(UPPER(?),?,?); END;");        
+        cs.setString(1, autor.getNome());
+        cs.setString(2, nomeAnt);
+        cs.setInt(3, idPar);
         cs.execute();
 
         connOracle.desconectar();
@@ -67,7 +66,6 @@ public class DaoAutor {
     }
 
     public ArrayList<Autor> listar() throws SQLException {
-
         ArrayList<Autor> lista = new ArrayList<>();
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
