@@ -8,6 +8,7 @@ package Controle;
 import DAO.DaoLog;
 import Modelo.Log;
 import Modelo.Tabelas.tabelaLog;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public class CtrlLog {
             log.setDt_log(data);
             tabelaLog tm = new tabelaLog(dao, 2, log);
             table.setModel(tm);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao listar log  \n" + e.getMessage());
         }
@@ -51,7 +52,7 @@ public class CtrlLog {
             log.setDt_log(data);
             tabelaLog tm = new tabelaLog(dao, 3, log);
             table.setModel(tm);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao listar log  \n" + e.getMessage());
         }
@@ -64,7 +65,7 @@ public class CtrlLog {
             log.setDt_log(data);
             tabelaLog tm = new tabelaLog(dao, 4, log);
             table.setModel(tm);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao listar log  \n" + e.getMessage());
         }
@@ -77,7 +78,7 @@ public class CtrlLog {
             log.setTabela(nomeTabela);
             tabelaLog tm = new tabelaLog(dao, 5, log);
             table.setModel(tm);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao listar log  \n" + e.getMessage());
         }

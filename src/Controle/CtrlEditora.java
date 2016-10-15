@@ -74,7 +74,7 @@ public class CtrlEditora {
         }
     }
       
-       public static void listarAutor(JTable table) {
+       public static void listarEditora(JTable table) {
 
         try {
             DaoEditora dao = new DaoEditora();
@@ -87,7 +87,7 @@ public class CtrlEditora {
         }
     }
        
-       public static void listarAutorNome(JTable table, String nomeEditora) {
+       public static void listarEditoraNome(JTable table, String nomeEditora) {
 
         try {
            DaoEditora dao = new DaoEditora();

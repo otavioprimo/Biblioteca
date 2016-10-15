@@ -302,7 +302,7 @@ public class EditoraTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtPesquisarEditoraActionPerformed
 
     private void jtxtPesquisarEditoraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisarEditoraKeyReleased
-        CtrlEditora.listarAutorNome(jtableEditora, jtxtPesquisarEditora.getText().trim());
+        CtrlEditora.listarEditoraNome(jtableEditora, jtxtPesquisarEditora.getText().trim());
     }//GEN-LAST:event_jtxtPesquisarEditoraKeyReleased
 
     private void jtableEditoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableEditoraMouseClicked
@@ -326,7 +326,7 @@ public class EditoraTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtCnpjEditoraKeyReleased
 
     private void listarTabelaEditora() {
-        CtrlEditora.listarAutor(jtableEditora);
+        CtrlEditora.listarEditora(jtableEditora);
     }
 
     private void preencherCampos() {

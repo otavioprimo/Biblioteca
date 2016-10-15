@@ -21,6 +21,15 @@ public class Cliente {
     private String numero;
     private Cidade cidade = new Cidade();
     private String email;
+    private char ativo;
+
+    public char getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(char ativo) {
+        this.ativo = ativo;
+    }
 
     public int getIdCliente() {
         return idCliente;

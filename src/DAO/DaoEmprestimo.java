@@ -5,10 +5,24 @@
  */
 package DAO;
 
+import Conexao.ConnectionFactory;
+import Modelo.Emprestimo;
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author aluno6814
  */
 public class DaoEmprestimo {
     
+    ConnectionFactory connOracle = new ConnectionFactory();
+    
+    public void salvar(Emprestimo emprestimo) throws SQLException{
+        
+    }
 }
