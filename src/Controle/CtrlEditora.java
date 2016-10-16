@@ -11,6 +11,7 @@ import Modelo.Tabelas.tabelaEditora;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -55,11 +56,11 @@ public class CtrlEditora {
             JOptionPane.showMessageDialog(null, "Erro ao excluir Editora \n" + e.getMessage());
         }
     }
-    
-      public static void editar(String nomeNovo, String emailNovo,String cnpjNovo, int idAtual) {
-       Editora editora = new Editora();
 
-        try {            
+    public static void editar(String nomeNovo, String emailNovo, String cnpjNovo, int idAtual) {
+        Editora editora = new Editora();
+
+        try {
             editora.setNome(nomeNovo);
             editora.setEmail(emailNovo);
             editora.setCnpj(cnpjNovo);
@@ -73,8 +74,8 @@ public class CtrlEditora {
             JOptionPane.showMessageDialog(null, "Erro ao editar Editora \n Verifique se a Editora já existe!\n" + e.getMessage());
         }
     }
-      
-       public static void listarEditora(JTable table) {
+
+    public static void listarEditora(JTable table) {
 
         try {
             DaoEditora dao = new DaoEditora();
@@ -83,14 +84,14 @@ public class CtrlEditora {
             table.setModel(tm);
         } catch (SQLException e) {
             Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao listar editoras \n" + e.getMessage());
         }
     }
-       
-       public static void listarEditoraNome(JTable table, String nomeEditora) {
+
+    public static void listarEditoraNome(JTable table, String nomeEditora) {
 
         try {
-           DaoEditora dao = new DaoEditora();
+            DaoEditora dao = new DaoEditora();
             Editora editora = new Editora();
             editora.setNome(nomeEditora);
             tabelaEditora tm = new tabelaEditora(dao, true, editora);
@@ -98,7 +99,25 @@ public class CtrlEditora {
 
         } catch (SQLException e) {
             Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao listar editoras  \n" + e.getMessage());
         }
+    }
+
+    public static int adicionarEditoraCB(JComboBox comboBox) {
+
+        int id = 0;
+
+        try {
+            DaoEditora dao = new DaoEditora();
+
+            Editora e = new Editora();
+            dao.listarComboBox(comboBox);
+            id = e.getIdEditora();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao listar ComboBox com Editoras \n" + e.getMessage());
+        }
+        return id;
     }
 }

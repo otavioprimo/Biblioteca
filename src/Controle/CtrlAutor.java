@@ -58,7 +58,7 @@ public class CtrlAutor {
     public static void editar(String nomeNovo, String nomeAtual, int idAtual) {
         Autor autor = new Autor();
 
-        try {            
+        try {
             autor.setNome(nomeNovo);
 
             DaoAutor dao = new DaoAutor();
@@ -100,34 +100,20 @@ public class CtrlAutor {
         }
     }
 
-    /*public static void listarAutorNome(String nome) {
-         DaoAutor dao = new DaoAutor();
-         Autor autor = new Autor();
-         autor.setNome(nome);
-        try {
-            ArrayList<Autor> lista = dao.listarPorNome(autor);
-            for (Autor a:lista) {
-                System.out.println("ID: " + a.getIdAutor());
-                System.out.println("Nome: " + a.getNome());
-                System.out.println("--------------------------------------");                
-            }
-            
-        } catch (SQLException e) {
-            Logger.getLogger(CtrlAutor.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "Erro ao listar autores  \n" + e.getMessage());
-        }
-    }*/
-    public static void adicionarAutorCB(JComboBox comboBox) {
+    public static int adicionarAutorCB(JComboBox comboBox) {
+        int id = 0;
 
         try {
             Autor autor = new Autor();
             DaoAutor dao = new DaoAutor();
 
             dao.listarComboBox(comboBox);
+            id = autor.getIdAutor();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao listar ComboBox com Autores \n" + e.getMessage());
         }
-
+        return id;
     }
 }

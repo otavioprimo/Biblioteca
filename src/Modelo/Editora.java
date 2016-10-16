@@ -11,6 +11,19 @@ package Modelo;
  */
 public class Editora {
 
+    private int idEditora;
+    private String nome;
+    private String cnpj;
+    private String email;
+
+    public Editora() {
+    }
+
+    public Editora(int idEditora, String nome) {
+        this.idEditora = idEditora;
+        this.nome = nome;
+    }   
+
     public int getIdEditora() {
         return idEditora;
     }
@@ -42,10 +55,12 @@ public class Editora {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    private int idEditora;
-    private String nome;
-    private String cnpj;
-    private String email;
-    
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+   
+
 }

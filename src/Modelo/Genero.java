@@ -13,6 +13,14 @@ public class Genero {
     private int idGenero;
     private String tipo;
 
+    public Genero() {
+    }
+
+    public Genero(int idGenero, String tipo) {
+        this.idGenero = idGenero;
+        this.tipo = tipo;
+    }
+    
     public int getIdGenero() {
         return idGenero;
     }
@@ -28,5 +36,11 @@ public class Genero {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return tipo;
+    }
+    
     
 }

@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -109,5 +110,26 @@ public class DaoGenero {
         connOracle.desconectar();
 
         return lista;
+    }
+    
+     public void listarComboBox(JComboBox comboBox) throws SQLException {
+
+        connOracle.conectar();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT IDGenero, TIpo ");
+        sql.append("FROM GENERO ");
+        sql.append("ORDER BY Tipo ASC");
+
+        comboBox.removeAllItems();
+        comboBox.addItem("Escolha um Genero");
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        ResultSet resultado = pst.executeQuery();
+
+        while (resultado.next()) {
+            int id = resultado.getInt("IDGenero");
+            String tipo = resultado.getString("Tipo");
+            comboBox.addItem(new Genero(id, tipo));            
+            comboBox.updateUI();
+        }
     }
 }

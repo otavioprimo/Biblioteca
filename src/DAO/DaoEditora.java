@@ -96,11 +96,11 @@ public class DaoEditora {
         sql.append("FROM EDITORA ");
         sql.append("WHERE Nome LIKE UPPER(?) ");
         sql.append("ORDER BY IDEditora ASC ");
-        
+
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, "%" + editora.getNome() + "%");
         ResultSet resultado = pst.executeQuery();
-        
+
         while (resultado.next()) {
             Editora e = new Editora();
             e.setIdEditora(resultado.getInt("IDEditora"));
@@ -118,7 +118,7 @@ public class DaoEditora {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDEditora, nome, email ,cnpj ");
+        sql.append("SELECT IDEditora, Nome ");
         sql.append("FROM EDITORA ");
         sql.append("ORDER BY IDEditora ASC");
 
@@ -126,9 +126,11 @@ public class DaoEditora {
         comboBox.addItem("Escolha uma Editora");
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         ResultSet resultado = pst.executeQuery();
-        while (resultado.next()) {
 
-            comboBox.addItem(resultado.getString("nome"));
+        while (resultado.next()) {
+            int id = resultado.getInt("IDEditora");
+            String nome = resultado.getString("Nome");
+            comboBox.addItem(new Editora(id, nome));            
             comboBox.updateUI();
         }
     }

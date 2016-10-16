@@ -92,7 +92,7 @@ public class DaoAutor {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT Nome ");
+        sql.append("SELECT IDAutor, Nome ");
         sql.append("FROM Autor ");
         sql.append("ORDER BY Nome ASC");
 
@@ -102,8 +102,9 @@ public class DaoAutor {
         ResultSet resultado = pst.executeQuery();
 
         while (resultado.next()) {
-
-            comboBox.addItem(resultado.getString("Nome"));
+            int id = resultado.getInt("IDAutor");
+            String nome = resultado.getString("Nome");
+            comboBox.addItem(new Autor(id,nome));
             comboBox.updateUI();
         }
 

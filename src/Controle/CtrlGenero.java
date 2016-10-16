@@ -11,6 +11,7 @@ import Modelo.Tabelas.tabelaGenero;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -101,6 +102,24 @@ public class CtrlGenero {
             JOptionPane.showMessageDialog(null, "Erro ao listar  Genero \n" + e.getMessage());
 
         }
+    }
+    
+     public static int adicionarEditoraCB(JComboBox comboBox) {
+
+        int id = 0;
+
+        try {
+            DaoGenero dao = new DaoGenero();
+
+            Genero g = new Genero();
+            dao.listarComboBox(comboBox);
+            id = g.getIdGenero();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao listar ComboBox com Gêneros \n" + e.getMessage());
+        }
+        return id;
     }
 
 }
