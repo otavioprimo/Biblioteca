@@ -22,6 +22,7 @@ public class Cliente {
     private Cidade cidade = new Cidade();
     private String email;
     private char ativo;
+    
 
     public char getAtivo() {
         return ativo;

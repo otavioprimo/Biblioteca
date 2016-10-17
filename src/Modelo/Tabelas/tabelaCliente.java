@@ -28,6 +28,7 @@ public class tabelaCliente extends AbstractTableModel implements TableModelListe
     //Filtro 2 = listar clientes pelo nome
     //Filtro 3 = listar clientes pelo email
     //Filtro 4 = listar clientes por Atividade
+    //Filtro 5 = listar cliente por RG
     public tabelaCliente(DaoCliente daoCliente, int tipoFiltro, Cliente c) throws SQLException {
         this.dao = daoCliente;
         colunas = Arrays.asList("Id", "Nome", "Email", "Rg", "Cpf", "Telefone", "Endereço", "Bairro", "Número", "Cidade", "Ativo");
@@ -44,6 +45,9 @@ public class tabelaCliente extends AbstractTableModel implements TableModelListe
                 break;
             case 4:
                 this.clientes = daoCliente.listarPorAtivo(c);
+                break;
+            case 5:
+                this.clientes = daoCliente.listarPorRG(c);
                 break;
             default:
                 this.clientes = daoCliente.listar();

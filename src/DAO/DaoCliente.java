@@ -27,7 +27,7 @@ public class DaoCliente {
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN ADD_CLI(UPPER(?),UPPER(?),?,?,UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?)); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_CLI(UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?)); END;");
         cs.setString(1, cliente.getNome());
         cs.setString(2, cliente.getRg());
         cs.setString(3, cliente.getCpf());
@@ -53,7 +53,7 @@ public class DaoCliente {
         connOracle.desconectar();
     }
 
-    public void editar(Cliente cliente,String nomeAnterior, int idPar) throws SQLException {
+    public void editar(Cliente cliente, String nomeAnterior, int idPar) throws SQLException {
         connOracle.conectar();
 
         CallableStatement cs;
@@ -83,7 +83,7 @@ public class DaoCliente {
         sql.append("FROM CLIENTE C ");
         sql.append("INNER JOIN Cidade CID ON C.IDCidade = CID.IDCidade ");
         sql.append("ORDER BY IDCliente ASC ");
-        
+
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         ResultSet resultado = pst.executeQuery();
 
@@ -123,7 +123,7 @@ public class DaoCliente {
         sql.append("FROM CLIENTE C ");
         sql.append("INNER JOIN Cidade CID ON C.IDCidade = CID.IDCIDADE ");
         sql.append("WHERE C.Nome LIKE UPPER(?) ");
-        sql.append("ORDER BY IDCliente ASC ");
+        sql.append("ORDER BY Nome ASC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, "%" + c.getNome() + "%");
@@ -132,7 +132,7 @@ public class DaoCliente {
         ArrayList<Cliente> lista = new ArrayList<Cliente>();
 
         while (resultado.next()) {
-            
+
             Cidade cidade = new Cidade();
             cidade.setIdCidade(resultado.getInt("IDCidade"));
             cidade.setNome(resultado.getString("Nome_cidade"));
@@ -155,7 +155,7 @@ public class DaoCliente {
         connOracle.desconectar();
         return lista;
     }
-    
+
     public ArrayList<Cliente> listarPorEmail(Cliente c) throws SQLException {
 
         connOracle.conectar();
@@ -165,7 +165,7 @@ public class DaoCliente {
         sql.append("FROM CLIENTE C ");
         sql.append("INNER JOIN Cidade CID ON C.IDCidade = CID.IDCIDADE ");
         sql.append("WHERE C.Email LIKE UPPER(?) ");
-        sql.append("ORDER BY IDCliente ASC ");
+        sql.append("ORDER BY Nome ASC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, "%" + c.getEmail() + "%");
@@ -174,7 +174,7 @@ public class DaoCliente {
         ArrayList<Cliente> lista = new ArrayList<Cliente>();
 
         while (resultado.next()) {
-            
+
             Cidade cidade = new Cidade();
             cidade.setIdCidade(resultado.getInt("IDCidade"));
             cidade.setNome(resultado.getString("Nome_cidade"));
@@ -197,7 +197,7 @@ public class DaoCliente {
         connOracle.desconectar();
         return lista;
     }
-    
+
     public ArrayList<Cliente> listarPorAtivo(Cliente c) throws SQLException {
 
         connOracle.conectar();
@@ -210,13 +210,55 @@ public class DaoCliente {
         sql.append("ORDER BY IDCliente ASC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
-        pst.setString(1, "%" + c.getAtivo()+ "%");
+        pst.setString(1, "%" + c.getAtivo() + "%");
         ResultSet resultado = pst.executeQuery();
 
         ArrayList<Cliente> lista = new ArrayList<Cliente>();
 
         while (resultado.next()) {
-            
+
+            Cidade cidade = new Cidade();
+            cidade.setIdCidade(resultado.getInt("IDCidade"));
+            cidade.setNome(resultado.getString("Nome_cidade"));
+
+            Cliente cliente = new Cliente();
+            cliente.setIdCliente(resultado.getInt("IDCliente"));
+            cliente.setNome(resultado.getString("Nome"));
+            cliente.setRg(resultado.getString("Rg"));
+            cliente.setCpf(resultado.getString("Cpf"));
+            cliente.setTelefone(resultado.getString("Tel"));
+            cliente.setEndereco(resultado.getString("Endereco"));
+            cliente.setBairro(resultado.getString("Bairro"));
+            cliente.setNumero(resultado.getString("Numero"));
+            cliente.setCidade(cidade);
+            cliente.setEmail(resultado.getString("Email"));
+            cliente.setAtivo(resultado.getString("Ativo").charAt(0));
+
+            lista.add(cliente);
+        }
+        connOracle.desconectar();
+        return lista;
+    }
+    
+    public ArrayList<Cliente> listarPorRG(Cliente c) throws SQLException {
+
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT C.IDCliente, C.Nome, C.Rg, C.Cpf, C.Tel, C.Endereco, C.Bairro, CID.Nome_Cidade, cid.IDCidade, C.Numero, C.Email, C.Ativo ");
+        sql.append("FROM CLIENTE C ");
+        sql.append("INNER JOIN Cidade CID ON C.IDCidade = CID.IDCIDADE ");
+        sql.append("WHERE C.Rg LIKE UPPER(?) ");
+        sql.append("ORDER BY IDCliente ASC ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + c.getRg() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Cliente> lista = new ArrayList<Cliente>();
+
+        while (resultado.next()) {
+
             Cidade cidade = new Cidade();
             cidade.setIdCidade(resultado.getInt("IDCidade"));
             cidade.setNome(resultado.getString("Nome_cidade"));

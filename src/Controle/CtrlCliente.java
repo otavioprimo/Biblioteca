@@ -21,7 +21,7 @@ import javax.swing.JTable;
  */
 public class CtrlCliente {
 
-    public static void salvar(String nome, String rg, String cpf, String telefone, String endereco, String numero, int idCidade, String email, String ativo, String bairro) {
+    public static void salvar(String nome, String rg, String cpf, String telefone, String endereco, String numero, int idCidade, String email, char ativo, String bairro) {
         Cliente cliente = new Cliente();
         Cidade cidade = new Cidade();
 
@@ -37,7 +37,7 @@ public class CtrlCliente {
             cliente.setCidade(cidade);
             cliente.setEmail(email);
             cliente.setBairro(bairro);
-            cliente.setAtivo(ativo.charAt(0));
+            cliente.setAtivo(ativo);
 
             DaoCliente dao = new DaoCliente();
             dao.salvar(cliente);
@@ -64,7 +64,7 @@ public class CtrlCliente {
         }
     }
 
-    public static void editar(String nome, String rg, String cpf, String telefone, String endereco, String numero, int idCidade, String email, String ativo, String bairro, String nomeAnterior, int idPar) {
+    public static void editar(String nome, String rg, String cpf, String telefone, String endereco, String numero, int idCidade, String email,char ativo, String bairro, String nomeAnterior, int idPar) {
         Cliente cliente = new Cliente();
         Cidade cidade = new Cidade();
         try {
@@ -79,7 +79,7 @@ public class CtrlCliente {
             cliente.setCidade(cidade);
             cliente.setEmail(email);
             cliente.setBairro(bairro);
-            cliente.setAtivo(ativo.charAt(0));
+            cliente.setAtivo(ativo);
 
             DaoCliente dao = new DaoCliente();
             dao.editar(cliente, nomeAnterior, idPar);
@@ -138,6 +138,20 @@ public class CtrlCliente {
         try {
             cliente.setAtivo(ativo);
             tabelaCliente tm = new tabelaCliente(dao, 4, cliente);
+            table.setModel(tm); 
+        } catch (SQLException e) {
+            Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao listar clientes  \n" + e.getMessage());
+        }
+    }
+    
+    public static void listarClienteRG(JTable table, String rg){
+       Cliente cliente = new Cliente();
+       DaoCliente dao = new DaoCliente();
+
+        try {
+            cliente.setRg(rg);
+            tabelaCliente tm = new tabelaCliente(dao, 5, cliente);
             table.setModel(tm); 
         } catch (SQLException e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);

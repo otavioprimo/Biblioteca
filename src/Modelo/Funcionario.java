@@ -10,7 +10,7 @@ package Modelo;
  * @author aluno6814
  */
 public class Funcionario {
-    
+
     private int idFuncionario;
     private String nome;
     private String rg;
@@ -20,6 +20,15 @@ public class Funcionario {
     private String login;
     private String senha;
     private char cargo;
+    private char ativo;
+
+    public Funcionario() {
+    }
+
+    public Funcionario(int idFuncionario, String nome) {
+        this.idFuncionario = idFuncionario;
+        this.nome = nome;
+    }
 
     public int getIdFuncionario() {
         return idFuncionario;
@@ -92,5 +101,18 @@ public class Funcionario {
     public void setCargo(char cargo) {
         this.cargo = cargo;
     }
-    
+
+    public char getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(char ativo) {
+        this.ativo = ativo;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
 }
