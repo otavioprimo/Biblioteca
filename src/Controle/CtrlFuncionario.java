@@ -92,7 +92,7 @@ public class CtrlFuncionario {
             JOptionPane.showMessageDialog(null, "Erro ao listar clientes  \n" + e.getMessage());
         }
     }
-   
+
     public static void listarFuncionariosRG(JTable table, String rg) {
         Funcionario funcionario = new Funcionario();
         DaoFuncionario dao = new DaoFuncionario();
@@ -118,6 +118,51 @@ public class CtrlFuncionario {
         } catch (Exception e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao listar clientes  \n" + e.getMessage());
+        }
+    }
+
+    public static String buscarSenha(String usuario) {
+        Funcionario funcionario = new Funcionario();
+        DaoFuncionario dao = new DaoFuncionario();
+        String senha = null;
+
+        try {
+            funcionario.setLogin(usuario);
+            senha = dao.buscarSenha(funcionario);
+        } catch (Exception e) {
+            Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar Usuario/Senha  \n" + e.getMessage());
+        }
+
+        return senha;
+    }
+    
+    public static void editarSenhaComUsuario(String usuario,String senha){
+        Funcionario funcionario = new Funcionario();
+        DaoFuncionario dao = new DaoFuncionario();
+        
+        try {
+            funcionario.setLogin(usuario);
+            funcionario.setSenha(senha);
+            dao.editarSenhaComUsuario(funcionario);
+        } catch (Exception e) {
+            Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao tentar mudar a senha \n Por Favor tente novamente mais tarde \n" + e.getMessage());
+        }
+    }
+    
+     public static void editarSenhaComEmail(String email,String senha){
+        Funcionario funcionario = new Funcionario();
+        DaoFuncionario dao = new DaoFuncionario();
+        
+        try {
+            funcionario.setEmail(email);
+            funcionario.setSenha(senha);
+            dao.editarSenhaComEmail(funcionario);
+            System.out.println("senha editada com sucesso " + senha);
+        } catch (Exception e) {
+            Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao tentar mudar a senha \nPor Favor tente novamente mais tarde \n" + e.getMessage());
         }
     }
 }

@@ -62,7 +62,7 @@ public class DaoFuncionario {
         cs.setString(3, funcionario.getCpf());
         cs.setString(4, funcionario.getTelefone());
         cs.setString(5, funcionario.getEmail());
-        cs.setString(6, funcionario.getLogin());        
+        cs.setString(6, funcionario.getLogin());
         cs.setString(7, String.valueOf(funcionario.getCargo()));
         cs.setString(8, String.valueOf(funcionario.getAtivo()));
         cs.setInt(9, idPar);
@@ -135,7 +135,7 @@ public class DaoFuncionario {
 
         return lista;
     }
-    
+
     public ArrayList<Funcionario> listarPorRG(Funcionario f) throws SQLException {
         connOracle.conectar();
 
@@ -167,6 +167,58 @@ public class DaoFuncionario {
         }
 
         return lista;
+    }
+
+    public String buscarSenha(Funcionario f) throws SQLException {
+        String senha = null;
+
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT Senha ");
+        sql.append("FROM Funcionario ");
+        sql.append("WHERE login LIKE ? ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, f.getLogin());
+        ResultSet resultado = pst.executeQuery();
+
+        resultado.next();
+        senha = resultado.getString("Senha");
+
+        return senha;
+    }
+
+    public void editarSenhaComUsuario(Funcionario f) throws SQLException {
+        connOracle.conectar();
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE funcionario ");
+        sql.append("SET Senha = ? ");
+        sql.append("WHERE Login LIKE ? ;");
+        sql.append("insert into Log (idlog, tabela, motivo, conteudo,mudanca, dt_log)\n"
+                + "values(sq_log.nextval, 'FUNCIONARIO', 'ATUALIZA', ?, 'SENHA', sysdate);");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, f.getSenha());
+        pst.setString(2, f.getLogin());
+
+        pst.execute();
+        connOracle.desconectar();
+    }
+    
+     public void editarSenhaComEmail(Funcionario f) throws SQLException {
+        connOracle.conectar();
+        connOracle.conectar();
+
+        CallableStatement cs;
+
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_FUNC_SENHA(?,?); END;");        
+       
+        cs.setString(1, f.getSenha());
+        cs.setString(2, f.getEmail());
+        
+        cs.execute();
+        connOracle.desconectar();
     }
 
 }

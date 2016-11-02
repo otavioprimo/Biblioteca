@@ -48,17 +48,18 @@ public class DaoEditora {
         connOracle.desconectar();
     }
 
-    public void editar(Editora editora, int idPar) throws SQLException {
+    public void editar(Editora editora,String nomeAnt, int idPar) throws SQLException {
 
         connOracle.conectar();
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_EDITORA(UPPER(?),?,?,?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_EDITORA(UPPER(?),?,?,?,?); END;");
         cs.setString(1, editora.getNome());
         cs.setString(2, editora.getCnpj());
         cs.setString(3, editora.getEmail());
-        cs.setInt(4, idPar);
+        cs.setString(3,nomeAnt);
+        cs.setInt(5, idPar);
         cs.execute();
 
         connOracle.desconectar();

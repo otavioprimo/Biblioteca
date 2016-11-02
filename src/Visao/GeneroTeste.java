@@ -253,18 +253,19 @@ public class GeneroTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparCamposActionPerformed
 
     private void jtxtPesquisarGeneroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisarGeneroKeyReleased
-       CtrlGenero.listarGeneroTipo(jTableGenero, jtxtPesquisarGenero.getText().trim());
+        CtrlGenero.listarGeneroTipo(jTableGenero, jtxtPesquisarGenero.getText().trim());
     }//GEN-LAST:event_jtxtPesquisarGeneroKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Genero g = (Genero) jComboBox1.getSelectedItem();
+        Genero g = (Genero) jComboBox1.getSelectedItem();
         int id = g.getIdGenero();
         System.out.println(id);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void listarComboBox(){
+    private void listarComboBox() {
         CtrlGenero.adicionarEditoraCB(jComboBox1);
     }
+
     /**
      * @param args the command line arguments
      */

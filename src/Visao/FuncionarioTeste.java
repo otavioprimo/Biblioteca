@@ -320,7 +320,7 @@ public class FuncionarioTeste extends javax.swing.JFrame {
         String senhaCript = Criptografia.criptografar(senhaPura);
 
         EnviarEmail enviar = new EnviarEmail();
-        enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", jtxtEmail.getText().trim(), "Sasad Biblioteca", "Nova Senha: " + senhaPura);
+        enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", jtxtEmail.getText().trim(), "Sasad Biblioteca", "Usuário: " + jtxtLogin.getText().trim() + "\nSenha: " + senhaPura);
 
         char ativo;
         ativo = 'S';
@@ -382,17 +382,7 @@ public class FuncionarioTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtPesquisarNomeKeyReleased
 
     private void jtxtPesquisarRgKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtPesquisarRgKeyReleased
-        String rgPuro;
-        rgPuro = jtxtPesquisarRg.getText().trim();
-        rgPuro = rgPuro.replace("", "");
-        rgPuro = rgPuro.replace(".", "");
-        rgPuro = rgPuro.replace("-", "");
-
-        if (jtxtPesquisarRg.equals("")) {
-            listarTabelaFuncionarios();
-        } else {
-            CtrlFuncionario.listarFuncionariosRG(jTable1, rgPuro);
-        }
+       
 
     }//GEN-LAST:event_jtxtPesquisarRgKeyReleased
 

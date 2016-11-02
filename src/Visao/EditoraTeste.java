@@ -283,7 +283,7 @@ public class EditoraTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtNomeEditoraKeyReleased
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        CtrlEditora.editar(jtxtNomeEditora.getText().trim(), jtxtEmailEditora.getText().trim(), jtxtCnpjEditora.getText().trim(), idEditoraAtual);
+        CtrlEditora.editar(jtxtNomeEditora.getText().trim(), jtxtEmailEditora.getText().trim(), jtxtCnpjEditora.getText().trim(),nomeEditoraAtual, idEditoraAtual);
         listarTabelaEditora();
         jtxtId.setText("");
         jtxtNomeEditora.setText("");

@@ -57,7 +57,7 @@ public class CtrlEditora {
         }
     }
 
-    public static void editar(String nomeNovo, String emailNovo, String cnpjNovo, int idAtual) {
+    public static void editar(String nomeNovo, String emailNovo, String cnpjNovo,String nomeAtual, int idAtual) {
         Editora editora = new Editora();
 
         try {
@@ -66,7 +66,7 @@ public class CtrlEditora {
             editora.setCnpj(cnpjNovo);
 
             DaoEditora dao = new DaoEditora();
-            dao.editar(editora, idAtual);
+            dao.editar(editora, nomeAtual,idAtual);
 
             JOptionPane.showMessageDialog(null, "Editora editada com sucesso");
         } catch (Exception e) {
