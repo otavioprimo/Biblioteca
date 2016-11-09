@@ -11,7 +11,10 @@ import Modelo.Autor;
 import Modelo.Editora;
 import Modelo.Genero;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -44,7 +47,7 @@ public class DaoLivro {
     public void excluir(Livro livro) throws SQLException {
         connOracle.conectar();
         CallableStatement cs;
-        
+
         cs = connOracle.conn.prepareCall("BEGIN DLT_LIVRO(?,UPPER(?)); END;");
         cs.setInt(1, livro.getIdLivro());
         cs.setString(2, livro.getTitulo());
@@ -52,11 +55,11 @@ public class DaoLivro {
         connOracle.desconectar();
     }
 
-    public void editar(Livro livro, String nomeAnterior, int idPar) throws SQLException {
+    public void editar(Livro livro, int idPar) throws SQLException {
         connOracle.conectar();
         CallableStatement cs;
-        
-        cs = connOracle.conn.prepareCall("BEGIN UPDT(UPPER(?),?,?,TO_TIMESTAMP(?,'DD/MM/YYYY'),UPPER(?),?,?,UPPER(?),?,UPPER(?),?,?); END;");
+
+        cs = connOracle.conn.prepareCall("BEGIN UPDT(UPPER(?),?,?,TO_TIMESTAMP(?,'DD/MM/YYYY'),UPPER(?),?,?,UPPER(?),?,UPPER(?),?); END;");
         cs.setString(1, livro.getTitulo());
         cs.setInt(2, livro.getAutor().getIdAutor());
         cs.setInt(3, livro.getNum_pag());
@@ -67,51 +70,205 @@ public class DaoLivro {
         cs.setString(8, livro.getPais());
         cs.setInt(9, livro.getGenero().getIdGenero());
         cs.setString(10, livro.getEstante());
-        cs.setString(11,nomeAnterior);
-        cs.setInt(12,idPar);                //Verificar se nome anterior é num 11 ou 12 se nao existir da alter na proc e botar nomeAnterior
+        cs.setInt(11, idPar);
         cs.execute();
         connOracle.desconectar();
     }
-    
-    public ArrayList<Livro> listar() throws SQLException{
+
+    public ArrayList<Livro> listar() throws SQLException {
         connOracle.conectar();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT ..."); //Alterar na tabela livro para Nome_Autor, Nome_Editora
-        
+        sql.append("SELECT l.idlivro, l.titulo,l.num_pag,l.edicao,to_char(l.dt_lanc,'DD/MM/YYYY') as dt_lancamento,l.isbn,l.pais,l.estante,a.idautor,a.nome_autor,e.ideditora,e.nome_editora,g.idgenero,g.tipo ");
+        sql.append("FROM Livro l ");
+        sql.append("JOIN Autor a ON a.idautor = l.idautor ");
+        sql.append("JOIN Editora e ON e.ideditora = l.ideditora ");
+        sql.append("JOIN Genero g ON g.idgenero = l.idgenero ");
+        sql.append("ORDER BY idlivro ASC");
+
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         ResultSet resultado = pst.executeQuery();
 
-        ArrayList<Livro> lista = new ArrayList<Cliente>();
+        ArrayList<Livro> lista = new ArrayList<Livro>();
         while (resultado.next()) {
             Autor autor = new Autor();
-            autor.setIdAutor(resultado.getInt("IDAutor"));
-            autor.setNome(resultado.getString("Nome_Autor"));
-            
+            autor.setIdAutor(resultado.getInt("idautor"));
+            autor.setNome(resultado.getString("nome_autor"));
+
             Genero genero = new Genero();
-            genero.setIdGenero(resultado.getInt("IDGenero"));
-            genero.setNome(resultado.getString("Tipo"));
-            
+            genero.setIdGenero(resultado.getInt("idgenero"));
+            genero.setTipo(resultado.getString("tipo"));
+
             Editora editora = new Editora();
-            editora.setIdEditora(resultad.getInt("IDEditora"));
-            editora.setTipo(resultado.getString("Nome_Editora"));
-            
+            editora.setIdEditora(resultado.getInt("ideditora"));
+            editora.setNome(resultado.getString("nome_editora"));
+
             Livro livro = new Livro();
-            livro.setIdLivro(resultado.getInt("IDLivro"));
-            livro.setTitulo(resultado.getString("Titulo"));
+            livro.setIdLivro(resultado.getInt("idlivro"));
+            livro.setTitulo(resultado.getString("titulo"));
+            livro.setNum_pag(resultado.getInt("num_pag"));
+            livro.setDt_lanc(resultado.getString("dt_lancamento"));
+            livro.setIsbn(resultado.getString("isbn"));
+            livro.setPais(resultado.getString("pais"));
+            livro.setEstante(resultado.getString("estante"));
+            livro.setEdicao(resultado.getString("edicao"));
             livro.setAutor(autor);
-            livro.setNum_pag(resultado.getInt("Num_Pag"));
-            livro.setDt_lanc(resultado.getString("Dt_Lanc"));
-            livro.setEdicao(resultado.getString("Edicao"));
-            livro.setIsbn(resultado.getString("ISBN"));
             livro.setEditora(editora);
-            livro.setPais(resultado.getString("Pais"));
             livro.setGenero(genero);
-            livro.setEstante(resultado.getString("Estante"));
-            
-            lista.add(Livro);
+
+            lista.add(livro);
         }
-        
+
+        connOracle.desconectar();
+        return lista;
+    }
+
+    public ArrayList<Livro> listarPorTitulo(Livro l) throws SQLException {
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT l.idlivro, l.titulo,l.num_pag,l.edicao,to_char(l.dt_lanc,'DD/MM/YYYY') as dt_lancamento,l.isbn,l.pais,l.estante,a.idautor,a.nome_autor,e.ideditora,e.nome_editora,g.idgenero,g.tipo ");
+        sql.append("FROM Livro l ");
+        sql.append("JOIN Autor a ON a.idautor = l.idautor ");
+        sql.append("JOIN Editora e ON e.ideditora = l.ideditora ");
+        sql.append("JOIN Genero g ON g.idgenero = l.idgenero ");
+        sql.append("WHERE l.titulo LIKE UPPER(?) ");
+        sql.append("ORDER BY titulo ASC");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + l.getTitulo() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Livro> lista = new ArrayList<Livro>();
+        while (resultado.next()) {
+            Autor autor = new Autor();
+            autor.setIdAutor(resultado.getInt("idautor"));
+            autor.setNome(resultado.getString("nome_autor"));
+
+            Genero genero = new Genero();
+            genero.setIdGenero(resultado.getInt("idgenero"));
+            genero.setTipo(resultado.getString("tipo"));
+
+            Editora editora = new Editora();
+            editora.setIdEditora(resultado.getInt("ideditora"));
+            editora.setNome(resultado.getString("nome_editora"));
+
+            Livro livro = new Livro();
+            livro.setIdLivro(resultado.getInt("idlivro"));
+            livro.setTitulo(resultado.getString("titulo"));
+            livro.setNum_pag(resultado.getInt("num_pag"));
+            livro.setDt_lanc(resultado.getString("dt_lancamento"));
+            livro.setIsbn(resultado.getString("isbn"));
+            livro.setPais(resultado.getString("pais"));
+            livro.setEstante(resultado.getString("estante"));
+            livro.setEdicao(resultado.getString("edicao"));
+            livro.setAutor(autor);
+            livro.setEditora(editora);
+            livro.setGenero(genero);
+
+            lista.add(livro);
+        }
+
+        connOracle.desconectar();
+        return lista;
+    }
+    
+    public ArrayList<Livro> listarPorGenero(Livro l) throws SQLException {
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT l.idlivro, l.titulo,l.num_pag,l.edicao,to_char(l.dt_lanc,'DD/MM/YYYY') as dt_lancamento,l.isbn,l.pais,l.estante,a.idautor,a.nome_autor,e.ideditora,e.nome_editora,g.idgenero,g.tipo ");
+        sql.append("FROM Livro l ");
+        sql.append("JOIN Autor a ON a.idautor = l.idautor ");
+        sql.append("JOIN Editora e ON e.ideditora = l.ideditora ");
+        sql.append("JOIN Genero g ON g.idgenero = l.idgenero ");
+        sql.append("WHERE g.tipo LIKE UPPER(?) ");
+        sql.append("ORDER BY titulo ASC");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + l.getGenero().getTipo() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Livro> lista = new ArrayList<Livro>();
+        while (resultado.next()) {
+            Autor autor = new Autor();
+            autor.setIdAutor(resultado.getInt("idautor"));
+            autor.setNome(resultado.getString("nome_autor"));
+
+            Genero genero = new Genero();
+            genero.setIdGenero(resultado.getInt("idgenero"));
+            genero.setTipo(resultado.getString("tipo"));
+
+            Editora editora = new Editora();
+            editora.setIdEditora(resultado.getInt("ideditora"));
+            editora.setNome(resultado.getString("nome_editora"));
+
+            Livro livro = new Livro();
+            livro.setIdLivro(resultado.getInt("idlivro"));
+            livro.setTitulo(resultado.getString("titulo"));
+            livro.setNum_pag(resultado.getInt("num_pag"));
+            livro.setDt_lanc(resultado.getString("dt_lancamento"));
+            livro.setIsbn(resultado.getString("isbn"));
+            livro.setPais(resultado.getString("pais"));
+            livro.setEstante(resultado.getString("estante"));
+            livro.setEdicao(resultado.getString("edicao"));
+            livro.setAutor(autor);
+            livro.setEditora(editora);
+            livro.setGenero(genero);
+
+            lista.add(livro);
+        }
+
+        connOracle.desconectar();
+        return lista;
+    }
+    
+    public ArrayList<Livro> listarPorAutor(Livro l) throws SQLException {
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT l.idlivro, l.titulo,l.num_pag,l.edicao,to_char(l.dt_lanc,'DD/MM/YYYY') as dt_lancamento,l.isbn,l.pais,l.estante,a.idautor,a.nome_autor,e.ideditora,e.nome_editora,g.idgenero,g.tipo ");
+        sql.append("FROM Livro l ");
+        sql.append("JOIN Autor a ON a.idautor = l.idautor ");
+        sql.append("JOIN Editora e ON e.ideditora = l.ideditora ");
+        sql.append("JOIN Genero g ON g.idgenero = l.idgenero ");
+        sql.append("WHERE a.nome_autor LIKE UPPER(?) ");
+        sql.append("ORDER BY titulo ASC");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setString(1, "%" + l.getAutor().getNome() + "%");
+        ResultSet resultado = pst.executeQuery();
+
+        ArrayList<Livro> lista = new ArrayList<Livro>();
+        while (resultado.next()) {
+            Autor autor = new Autor();
+            autor.setIdAutor(resultado.getInt("idautor"));
+            autor.setNome(resultado.getString("nome_autor"));
+
+            Genero genero = new Genero();
+            genero.setIdGenero(resultado.getInt("idgenero"));
+            genero.setTipo(resultado.getString("tipo"));
+
+            Editora editora = new Editora();
+            editora.setIdEditora(resultado.getInt("ideditora"));
+            editora.setNome(resultado.getString("nome_editora"));
+
+            Livro livro = new Livro();
+            livro.setIdLivro(resultado.getInt("idlivro"));
+            livro.setTitulo(resultado.getString("titulo"));
+            livro.setNum_pag(resultado.getInt("num_pag"));
+            livro.setDt_lanc(resultado.getString("dt_lancamento"));
+            livro.setIsbn(resultado.getString("isbn"));
+            livro.setPais(resultado.getString("pais"));
+            livro.setEstante(resultado.getString("estante"));
+            livro.setEdicao(resultado.getString("edicao"));
+            livro.setAutor(autor);
+            livro.setEditora(editora);
+            livro.setGenero(genero);
+
+            lista.add(livro);
+        }
+
         connOracle.desconectar();
         return lista;
     }
