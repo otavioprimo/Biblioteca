@@ -58,7 +58,7 @@ public class DaoEditora {
         cs.setString(1, editora.getNome());
         cs.setString(2, editora.getCnpj());
         cs.setString(3, editora.getEmail());
-        cs.setString(3,nomeAnt);
+        cs.setString(4,nomeAnt);
         cs.setInt(5, idPar);
         cs.execute();
 
@@ -69,7 +69,7 @@ public class DaoEditora {
         ArrayList<Editora> lista = new ArrayList<>();
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDEditora, nome, email ,cnpj ");
+        sql.append("SELECT IDEditora, nome_editora, email ,cnpj ");
         sql.append("FROM EDITORA ");
         sql.append("ORDER BY IDEditora ASC");
 
@@ -78,7 +78,7 @@ public class DaoEditora {
         while (resultado.next()) {
             Editora editora = new Editora();
             editora.setIdEditora(resultado.getInt("IDEditora"));
-            editora.setNome(resultado.getString("nome"));
+            editora.setNome(resultado.getString("nome_editora"));
             editora.setEmail(resultado.getString("email"));
             editora.setCnpj(resultado.getString("cnpj"));
 
@@ -93,9 +93,9 @@ public class DaoEditora {
         ArrayList<Editora> lista = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDEditora, nome, email ,cnpj ");
+        sql.append("SELECT IDEditora, nome_editora, email ,cnpj ");
         sql.append("FROM EDITORA ");
-        sql.append("WHERE Nome LIKE UPPER(?) ");
+        sql.append("WHERE Nome_Editora LIKE UPPER(?) ");
         sql.append("ORDER BY IDEditora ASC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
@@ -105,7 +105,7 @@ public class DaoEditora {
         while (resultado.next()) {
             Editora e = new Editora();
             e.setIdEditora(resultado.getInt("IDEditora"));
-            e.setNome(resultado.getString("nome"));
+            e.setNome(resultado.getString("nome_editora"));
             e.setEmail(resultado.getString("email"));
             e.setCnpj(resultado.getString("cnpj"));
 
@@ -119,7 +119,7 @@ public class DaoEditora {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDEditora, Nome ");
+        sql.append("SELECT IDEditora, Nome_Editora ");
         sql.append("FROM EDITORA ");
         sql.append("ORDER BY IDEditora ASC");
 
@@ -130,7 +130,7 @@ public class DaoEditora {
 
         while (resultado.next()) {
             int id = resultado.getInt("IDEditora");
-            String nome = resultado.getString("Nome");
+            String nome = resultado.getString("Nome_Editora");
             comboBox.addItem(new Editora(id, nome));            
             comboBox.updateUI();
         }

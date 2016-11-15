@@ -69,7 +69,7 @@ public class DaoAutor {
         ArrayList<Autor> lista = new ArrayList<>();
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDAutor, Nome ");
+        sql.append("SELECT IDAutor, Nome_Autor ");
         sql.append("FROM Autor ");
         sql.append("ORDER BY IDAutor ASC");
 
@@ -79,7 +79,7 @@ public class DaoAutor {
         while (resultado.next()) {
             Autor autor = new Autor();
             autor.setIdAutor(resultado.getInt("IDAutor"));
-            autor.setNome(resultado.getString("Nome"));
+            autor.setNome(resultado.getString("Nome_Autor"));
 
             lista.add(autor);
         }
@@ -92,9 +92,9 @@ public class DaoAutor {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDAutor, Nome ");
+        sql.append("SELECT IDAutor, Nome_Autor ");
         sql.append("FROM Autor ");
-        sql.append("ORDER BY Nome ASC");
+        sql.append("ORDER BY Nome_Autor ASC");
 
         comboBox.removeAllItems();
         comboBox.addItem("Escolha Autor");
@@ -103,7 +103,7 @@ public class DaoAutor {
 
         while (resultado.next()) {
             int id = resultado.getInt("IDAutor");
-            String nome = resultado.getString("Nome");
+            String nome = resultado.getString("Nome_Autor");
             comboBox.addItem(new Autor(id,nome));
             comboBox.updateUI();
         }
@@ -115,9 +115,9 @@ public class DaoAutor {
         ArrayList<Autor> lista = new ArrayList<>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT IDAutor,Nome ");
+        sql.append("SELECT IDAutor,Nome_Autor ");
         sql.append("FROM Autor ");
-        sql.append("WHERE Nome LIKE UPPER(?) ");
+        sql.append("WHERE Nome_Autor LIKE UPPER(?) ");
         sql.append("ORDER BY IDAutor ASC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
@@ -128,7 +128,7 @@ public class DaoAutor {
         while (resultado.next()) {
             Autor a = new Autor();
             a.setIdAutor(resultado.getInt("IDAutor"));
-            a.setNome(resultado.getString("Nome"));
+            a.setNome(resultado.getString("Nome_Autor"));
 
             lista.add(a);
         }

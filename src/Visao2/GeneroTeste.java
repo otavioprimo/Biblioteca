@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visao;
+package Visao2;
 
 import Controle.CtrlGenero;
 import Modelo.Genero;
@@ -263,7 +263,7 @@ public class GeneroTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void listarComboBox() {
-        CtrlGenero.adicionarEditoraCB(jComboBox1);
+        CtrlGenero.adicionarGeneroCB(jComboBox1);
     }
 
     /**

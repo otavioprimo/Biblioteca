@@ -70,8 +70,8 @@ public class CtrlEditora {
 
             JOptionPane.showMessageDialog(null, "Editora editada com sucesso");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao editar Editora \n Verifique se a Editora já existe!\n" + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao editar Editora \n\n" + e.getMessage());
         }
     }
 

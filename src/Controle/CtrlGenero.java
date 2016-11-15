@@ -104,7 +104,7 @@ public class CtrlGenero {
         }
     }
     
-     public static int adicionarEditoraCB(JComboBox comboBox) {
+     public static int adicionarGeneroCB(JComboBox comboBox) {
 
         int id = 0;
 

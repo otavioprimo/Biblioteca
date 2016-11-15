@@ -59,7 +59,7 @@ public class DaoLivro {
         connOracle.conectar();
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN UPDT(UPPER(?),?,?,TO_TIMESTAMP(?,'DD/MM/YYYY'),UPPER(?),?,?,UPPER(?),?,UPPER(?),?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_LIVRO(UPPER(?),?,?,TO_TIMESTAMP(?,'DD/MM/YYYY'),UPPER(?),?,?,UPPER(?),?,UPPER(?),?); END;");
         cs.setString(1, livro.getTitulo());
         cs.setInt(2, livro.getAutor().getIdAutor());
         cs.setInt(3, livro.getNum_pag());

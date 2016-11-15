@@ -27,7 +27,7 @@ public class DaoCliente {
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN ADD_CLI(UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?)); END;");
+        cs = connOracle.conn.prepareCall("BEGIN ADD_CLI(UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?),UPPER(?),?,?,UPPER(?)); END;");
         cs.setString(1, cliente.getNome());
         cs.setString(2, cliente.getRg());
         cs.setString(3, cliente.getCpf());
@@ -57,7 +57,7 @@ public class DaoCliente {
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_CLI(UPPER(?),UPPER(?),?,?,UPPER(?),UPPER(?),UPPER(?),?,UPPER(?),UPPER(?),?,?); END;");
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_CLI(UPPER(?),UPPER(?),?,?,UPPER(?),UPPER(?),UPPER(?),?,?,UPPER(?),?,?); END;");
         cs.setString(1, cliente.getNome());
         cs.setString(2, cliente.getRg());
         cs.setString(3, cliente.getCpf());

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visao;
+package Visao2;
 
 import Controle.CtrlCliente;
 import java.lang.reflect.Modifier;

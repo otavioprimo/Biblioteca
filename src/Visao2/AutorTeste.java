@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Visao;
+package Visao2;
 
 import Controle.CtrlAutor;
 import Modelo.Autor;
@@ -135,6 +135,11 @@ public class AutorTeste extends javax.swing.JFrame {
         jLabel3.setText("Nome");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("CB");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -278,10 +283,16 @@ public class AutorTeste extends javax.swing.JFrame {
     }//GEN-LAST:event_jtxtPesquisarAutorKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Autor a = (Autor) jComboBox1.getSelectedItem();
-        int id = a.getIdAutor();
-        System.out.println(id);
+        //Autor a = (Autor) jComboBox1.getSelectedItem();
+        //int id = a.getIdAutor();
+        //System.out.println(id);
+        
+        System.out.println(jComboBox1.getSelectedIndex());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,7 +308,6 @@ public class AutorTeste extends javax.swing.JFrame {
         jtxtNomeAutor.setText("" + jtableAutor.getValueAt(jtableAutor.getSelectedRow(), 1));
         idAutorAtual = Integer.parseInt(jtxtId.getText());
         nomeAutorAtual = jtxtNomeAutor.getText();
-
     }
     
     private void listarComboBox() {

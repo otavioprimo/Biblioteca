@@ -111,7 +111,7 @@ public class CtrlAutor {
             id = autor.getIdAutor();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao listar ComboBox com Autores \n" + e.getMessage());
         }
         return id;
