@@ -92,7 +92,7 @@ public class ViewLog extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -118,7 +118,7 @@ public class ViewLog extends javax.swing.JFrame {
                     .addComponent(jdateEspecifico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txttabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -142,7 +142,7 @@ public class ViewLog extends javax.swing.JFrame {
     }//GEN-LAST:event_txttabelaKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          if (!jdateEspecifico.isValid()) {
+        if (!jdateEspecifico.isValid()) {
             String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(jdateEspecifico.getDate());
             CtrlLog.listarDataLog(jTableLog, dataFormatada);
             jdateEspecifico.cleanup();
@@ -155,6 +155,7 @@ public class ViewLog extends javax.swing.JFrame {
     public void listarLog() {
         CtrlLog.listarLog(jTableLog);
     }
+
     /**
      * @param args the command line arguments
      */

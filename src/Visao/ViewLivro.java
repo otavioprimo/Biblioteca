@@ -144,6 +144,7 @@ public class ViewLivro extends javax.swing.JFrame {
 
         btnExcluir.setBackground(new java.awt.Color(0, 0, 0));
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/unchecked.png"))); // NOI18N
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -168,6 +169,7 @@ public class ViewLivro extends javax.swing.JFrame {
 
             }
         ));
+        jTableLivro.setDragEnabled(true);
         jTableLivro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableLivroMouseClicked(evt);
@@ -180,6 +182,11 @@ public class ViewLivro extends javax.swing.JFrame {
         jLabel12.setText("LIVRO");
 
         cbAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAutorActionPerformed(evt);
+            }
+        });
 
         cbEditora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -460,6 +467,10 @@ public class ViewLivro extends javax.swing.JFrame {
             listarTabelaLivro();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void cbAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAutorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAutorActionPerformed
 
     void listarTabelaLivro() {
         CtrlLivro.listarLivros(jTableLivro);

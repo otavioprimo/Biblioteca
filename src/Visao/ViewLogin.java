@@ -222,27 +222,30 @@ public class ViewLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String mensagem = "Deseja fechar a aplicação?";
         String titulo = "Deseja Sair?";
-        int resposta = JOptionPane.showConfirmDialog(null, mensagem,titulo,JOptionPane.YES_NO_OPTION);
+        int resposta = JOptionPane.showConfirmDialog(null, mensagem, titulo, JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
             System.exit(0);
-        }      
-        
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String senhaPura = new String(jtxtSenha.getPassword());
         String senhaCript = Criptografia.criptografar(senhaPura);
         String senhaDB = CtrlFuncionario.buscarSenha(jtxtUsuario.getText().trim());
-
+        int idfunc = CtrlFuncionario.buscarId(jtxtUsuario.getText().trim());
         if (senhaDB.equals(senhaCript)) {
+
             ViewPrincipal principal = new ViewPrincipal();
+            principal.idFunc = idfunc;
             principal.setVisible(true);
             this.dispose();
+            System.out.println("IdFunc:" + idfunc);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Usuario ou senha inválido");
             jtxtSenha.setText("");
         }
-        System.out.println("SenhaPura: " + senhaPura + " - Senha Cript: " + senhaCript + " - SenhaDB: " + senhaDB);
+        //System.out.println("SenhaPura: " + senhaPura + " - Senha Cript: " + senhaCript + " - SenhaDB: " + senhaDB);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jlblesqueciMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlblesqueciMouseClicked

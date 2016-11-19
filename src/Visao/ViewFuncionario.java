@@ -5,7 +5,13 @@
  */
 package Visao;
 
+import Controle.CtrlFuncionario;
+import Util.Criptografia;
+import Util.EnviarEmail;
+import Util.GeradorSenha;
+import Util.ValidaCPF;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,12 +19,18 @@ import java.awt.Color;
  */
 public class ViewFuncionario extends javax.swing.JFrame {
 
+    private int idFucnionarioAtual;
+    private String nomeFuncionarioAtual;
+    private boolean cpfValido;
+    private String checkFuncionarioAtivo;
+    private String cargoFunc;
+
     /**
      * Creates new form ViewFuncionario
      */
     public ViewFuncionario() {
         initComponents();
-        
+        listarTabelaFuncionario();
         getContentPane().setBackground(Color.black);
     }
 
@@ -94,6 +106,12 @@ public class ViewFuncionario extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome");
+
+        jtxtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtNomeActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,17 +190,37 @@ public class ViewFuncionario extends javax.swing.JFrame {
 
             }
         ));
+        jTableFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFuncionarioMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTableFuncionario);
 
         brnSalvar.setBackground(new java.awt.Color(0, 0, 0));
         brnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/checked.png"))); // NOI18N
         brnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        brnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnSalvarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setBackground(new java.awt.Color(0, 0, 0));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/edit.png"))); // NOI18N
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setBackground(new java.awt.Color(0, 0, 0));
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/unchecked.png"))); // NOI18N
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -255,17 +293,18 @@ public class ViewFuncionario extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtxtNome1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtxtRg1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jtxtNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jtxtRg1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
@@ -344,6 +383,121 @@ public class ViewFuncionario extends javax.swing.JFrame {
         ViewPrincipal principal = new ViewPrincipal();
         principal.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void jtxtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtNomeActionPerformed
+
+    private void brnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnSalvarActionPerformed
+        String cpfPuro;
+        cpfPuro = jtxtCpf.getText().trim();
+        cpfPuro = cpfPuro.replace(" ", "");
+        cpfPuro = cpfPuro.replace(".", "");
+        cpfPuro = cpfPuro.replace("-", "");
+
+        String rgPuro;
+        rgPuro = jtxtRg.getText().trim();
+        rgPuro = rgPuro.replace("", "");
+        rgPuro = rgPuro.replace(".", "");
+        rgPuro = rgPuro.replace("-", "");
+
+        char cargo;
+        if (jcbCargo.getSelectedIndex() == 0) {
+            cargo = '1';
+        } else {
+            cargo = '0';
+        }
+
+        String senhaPura = GeradorSenha.gerarSenha();
+        String senhaCript = Criptografia.criptografar(senhaPura);
+
+        EnviarEmail enviar = new EnviarEmail();
+        enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", jtxtEmail.getText().trim(), "Sasad Biblioteca", "Usuário: " + jtxtLogin.getText().trim() + "\nSenha: " + senhaPura);
+
+        char ativo;
+        ativo = 'S';
+        cpfValido = ValidaCPF.CPF(cpfPuro);
+        if (cpfValido) {
+            CtrlFuncionario.salvar(jtxtNome.getText().trim(), rgPuro, cpfPuro, jtxtTelefone.getText(),
+                    jtxtEmail.getText().trim(), jtxtLogin.getText().trim(), senhaCript, cargo, ativo);
+            listarTabelaFuncionario();
+        } else {
+            JOptionPane.showMessageDialog(null, "CPF Inválido!");
+        }    }//GEN-LAST:event_brnSalvarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String cpfPuro;
+        cpfPuro = jtxtCpf.getText().trim();
+        cpfPuro = cpfPuro.replace(" ", "");
+        cpfPuro = cpfPuro.replace(".", "");
+        cpfPuro = cpfPuro.replace("-", "");
+
+        String rgPuro;
+        rgPuro = jtxtRg.getText().trim();
+        rgPuro = rgPuro.replace("", "");
+        rgPuro = rgPuro.replace(".", "");
+        rgPuro = rgPuro.replace("-", "");
+
+        char cargo;
+        if (jcbCargo.getSelectedIndex() == 0) {
+            cargo = '1';
+        } else {
+            cargo = '0';
+        }
+
+        char ativo;
+
+        if (jckAtivo.isSelected()) {
+            ativo = 'S';
+        } else {
+            ativo = 'N';
+        }
+        cpfValido = ValidaCPF.CPF(cpfPuro);
+        if (cpfValido) {
+            CtrlFuncionario.editar(jtxtNome.getText().trim(), rgPuro, cpfPuro, jtxtTelefone.getText(), jtxtEmail.getText().trim(), jtxtLogin.getText().trim(), cargo, ativo, nomeFuncionarioAtual, idFucnionarioAtual);
+            listarTabelaFuncionario();
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        CtrlFuncionario.excluir(idFucnionarioAtual, nomeFuncionarioAtual);
+        listarTabelaFuncionario();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void jTableFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFuncionarioMouseClicked
+        preencherCampos();
+    }//GEN-LAST:event_jTableFuncionarioMouseClicked
+
+    private void listarTabelaFuncionario() {
+        CtrlFuncionario.listarFuncionarios(jTableFuncionario);
+    }
+
+    private void preencherCampos() {
+        jtxtNome.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 1));
+        jtxtEmail.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 2));
+        jtxtRg.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 3));
+        jtxtCpf.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 4));
+        jtxtTelefone.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 5));
+        jtxtLogin.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 6));
+        cargoFunc = jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 7).toString();
+        checkFuncionarioAtivo = jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 8).toString();
+        jtxtId.setText("" + jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 0));
+        nomeFuncionarioAtual = jTableFuncionario.getValueAt(jTableFuncionario.getSelectedRow(), 1).toString();
+        idFucnionarioAtual = Integer.parseInt(jtxtId.getText());
+
+        if (checkFuncionarioAtivo.equals("S")) {
+            jckAtivo.setSelected(true);
+        } else {
+            jckAtivo.setSelected(false);
+        }
+
+        if (cargoFunc.equals("1")) {
+            jcbCargo.setSelectedIndex(0);
+        } else {
+            jcbCargo.setSelectedIndex(1);
+        }
+
+    }
 
     /**
      * @param args the command line arguments

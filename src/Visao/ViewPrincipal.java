@@ -7,12 +7,15 @@ package Visao;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import Util.BloqueioUsuario;
 
 /**
  *
  * @author aluno6812
  */
 public class ViewPrincipal extends javax.swing.JFrame {
+
+    public int idFunc;
 
     /**
      * Creates new form Principal
@@ -21,6 +24,24 @@ public class ViewPrincipal extends javax.swing.JFrame {
         initComponents();
 
         getContentPane().setBackground(Color.black);
+
+//        int nivel = 5;
+//        BloqueioUsuario bloq = new BloqueioUsuario();
+//        bloq.CodFunc = idFunc;
+//        nivel = bloq.getNivel();
+//        System.out.println("Nivel: " +nivel);
+//        if (nivel == 0) {            
+//            btnCliente.setEnabled(false);
+//            btnFuncionarios.setEnabled(false);
+//            
+//        } else {            
+//            btnCliente.setEnabled(true);
+//            btnFuncionarios.setEnabled(true);
+//        }
+    }
+    
+    public ViewPrincipal getInstance(){
+        return this;
     }
 
     /**
@@ -142,6 +163,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/information_1.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,6 +253,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ViewAcervo acervo = new ViewAcervo();
         acervo.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnAcervoActionPerformed
 
@@ -234,14 +261,15 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ViewLivro livro = new ViewLivro();
         livro.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
-
     }//GEN-LAST:event_btnLivroActionPerformed
 
     private void btnAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutorActionPerformed
         // TODO add your handling code here:
         ViewAutor autor = new ViewAutor();
         autor.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnAutorActionPerformed
 
@@ -249,6 +277,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ViewEditora editora = new ViewEditora();
         editora.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnEditoraActionPerformed
 
@@ -256,14 +285,15 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ViewCliente cliente = new ViewCliente();
         cliente.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
-
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestimoActionPerformed
         // TODO add your handling code here:
         ViewEmprestimo emprestimo = new ViewEmprestimo();
         emprestimo.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnEmprestimoActionPerformed
 
@@ -271,6 +301,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ViewFuncionario funcionario = new ViewFuncionario();
         funcionario.setVisible(true);
+        //this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_btnFuncionariosActionPerformed
 
@@ -284,6 +315,13 @@ public class ViewPrincipal extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ViewLog log = new ViewLog();
+        log.setVisible(true);
+        //this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

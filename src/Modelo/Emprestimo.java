@@ -16,6 +16,15 @@ public class Emprestimo {
     private Funcionario funcionario = new Funcionario();
     private String dt_retirada;
     private String dt_devolucao;
+    private char devolvido;
+
+    public char getDevolvido() {
+        return devolvido;
+    }
+
+    public void setDevolvido(char devolvido) {
+        this.devolvido = devolvido;
+    }
 
     public int getIdEmprestimo() {
         return idEmprestimo;

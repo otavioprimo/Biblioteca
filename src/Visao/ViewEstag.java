@@ -5,6 +5,8 @@
  */
 package Visao;
 
+import java.awt.Color;
+
 /**
  *
  * @author aluno6812
@@ -16,6 +18,8 @@ public class ViewEstag extends javax.swing.JFrame {
      */
     public ViewEstag() {
         initComponents();
+        getContentPane().setBackground(Color.black);
+
     }
 
     /**
@@ -28,19 +32,21 @@ public class ViewEstag extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 707, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(723, 339));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

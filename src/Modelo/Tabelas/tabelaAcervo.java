@@ -27,7 +27,7 @@ public class tabelaAcervo extends AbstractTableModel implements TableModelListen
 
     public tabelaAcervo(DaoAcervo daoAcervo, Acervo a, int tipoFiltro) throws SQLException {
         this.dao = daoAcervo;
-        colunas = Arrays.asList("IdItem", "Titulo", "Quantidade", "Data de Entrada");
+        colunas = Arrays.asList("IdItem", "Titulo", "Quantidade", "Data de Entrada","IdLivro");
         this.addTableModelListener(this);
         switch (tipoFiltro) {
             case 1:
@@ -68,6 +68,8 @@ public class tabelaAcervo extends AbstractTableModel implements TableModelListen
                 return acervo.getQuantidade();
             case 3:
                 return acervo.getDt_entrada();
+            case 4:
+                return acervo.getLivro().getIdLivro();
         }
         return null;
     }

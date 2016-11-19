@@ -57,7 +57,7 @@ public class CtrlAcervo {
         }
     }
 
-    public static void editar(int novoIdLivro, int novaQtd, String novaDataEntrada, int idEditar, String nomeAtual) {
+    public static void editar(int novoIdLivro, int novaQtd, int idAcervo, String nomeAtual) {
         Acervo acervo = new Acervo();
         Livro livro = new Livro();
 
@@ -66,14 +66,27 @@ public class CtrlAcervo {
 
             acervo.setLivro(livro);
             acervo.setQuantidade(novaQtd);
-            acervo.setDt_entrada(novaDataEntrada);
+            //acervo.setDt_entrada(novaDataEntrada);
 
             DaoAcervo dao = new DaoAcervo();
-            dao.editar(acervo, nomeAtual, idEditar);
-            JOptionPane.showMessageDialog(null, "Item alterado no acervo");
+            dao.editar(acervo, nomeAtual, idAcervo);
+            // JOptionPane.showMessageDialog(null, "Item alterado no acervo");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao editar novo item \n" + e.getMessage());
+        }
+    }
+
+    public static void devolucaoLivro(int idLivro) {
+        Acervo a = new Acervo();
+        Livro l = new Livro();
+        try {
+            l.setIdLivro(idLivro);
+            a.setLivro(l);
+            DaoAcervo dao = new DaoAcervo();
+            dao.devolucaoLivro(a);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -99,9 +99,11 @@ public class ViewRecSenha extends javax.swing.JFrame {
         String senhaPura = GeradorSenha.gerarSenha();
         String senhaCript = Criptografia.criptografar(senhaPura);
 
-        EnviarEmail enviar = new EnviarEmail();
+        //EnviarEmail enviar = new EnviarEmail();
         CtrlFuncionario.editarSenhaComEmail(txtEmail.getText().trim(), senhaCript);
-        enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", txtEmail.getText().trim(), "Sasad Biblioteca", "Nova Senha: " + senhaPura);
+        //enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", txtEmail.getText().trim(), "Sasad Biblioteca", "Nova Senha: " + senhaPura);
+        System.out.println("Senha: " + senhaPura);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -55,7 +55,7 @@ public class DaoAcervo {
         connOracle.conectar();
 
         CallableStatement cs;
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,?,?); END;");        
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_ACERVO(?,?,sysdate,?,?); END;");        
         cs.setInt(1, acervo.getLivro().getIdLivro());
         cs.setInt(2, acervo.getQuantidade());
         //cs.setString(4, acervo.getDt_entrada());
@@ -65,12 +65,24 @@ public class DaoAcervo {
 
         connOracle.desconectar();
     }
+    
+    public void devolucaoLivro(Acervo acervo) throws SQLException {
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE acervo SET qtd = qtd + 1 WHERE idLivro = ?");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setInt(1, acervo.getLivro().getIdLivro());
+        pst.execute();
+        connOracle.desconectar();
+    }
 
     public ArrayList<Acervo> listar() throws SQLException {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada ");
+        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada,A.IDLivro ");
         sql.append("FROM Acervo A ");
         sql.append("JOIN LIVRO L ");
         sql.append("ON A.IDLivro = L.IDLivro ");
@@ -103,12 +115,12 @@ public class DaoAcervo {
 
         connOracle.conectar();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada ");
+        sql.append("SELECT A.IDItem, L.IDLivro, L.Titulo, A.Qtd,to_char(A.Dt_Entrada,'DD/MM/YYYY') as Dt_Entrada,A.IdLivro ");
         sql.append("FROM Acervo A ");
         sql.append("JOIN LIVRO L ");
         sql.append("ON A.IDLivro = L.IDLivro ");
         sql.append("WHERE L.Titulo LIKE UPPER(?) ");
-        sql.append("ORDER BY A.IDItem ASC ");
+        sql.append("ORDER BY A.IDItem DESC ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, "%" + acervo.getLivro().getTitulo() + "%");

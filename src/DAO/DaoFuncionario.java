@@ -178,6 +178,7 @@ public class DaoFuncionario {
         sql.append("SELECT Senha ");
         sql.append("FROM Funcionario ");
         sql.append("WHERE login LIKE ? ");
+        sql.append("AND ativo LIKE 'S' ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
         pst.setString(1, f.getLogin());
@@ -189,36 +190,61 @@ public class DaoFuncionario {
         return senha;
     }
 
-    public void editarSenhaComUsuario(Funcionario f) throws SQLException {
+    public int retornaId(Funcionario f) throws SQLException {
+        int id = 0;
+
         connOracle.conectar();
+
         StringBuilder sql = new StringBuilder();
-        sql.append("UPDATE funcionario ");
-        sql.append("SET Senha = ? ");
-        sql.append("WHERE Login LIKE ? ;");
-        sql.append("insert into Log (idlog, tabela, motivo, conteudo,mudanca, dt_log)\n"
-                + "values(sq_log.nextval, 'FUNCIONARIO', 'ATUALIZA', ?, 'SENHA', sysdate);");
+        sql.append("SELECT idfunc ");
+        sql.append("FROM Funcionario ");
+        sql.append("WHERE login LIKE ? ");
+        sql.append("AND ativo LIKE 'S' ");
 
         PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
-        pst.setString(1, f.getSenha());
-        pst.setString(2, f.getLogin());
+        pst.setString(1, f.getLogin());
+        ResultSet resultado = pst.executeQuery();
+        resultado.next();
+        id = resultado.getInt("idfunc");
 
-        pst.execute();
-        connOracle.desconectar();
+        return id;
     }
-    
-     public void editarSenhaComEmail(Funcionario f) throws SQLException {
+
+    public void editarSenhaComEmail(Funcionario f) throws SQLException {
         connOracle.conectar();
         connOracle.conectar();
 
         CallableStatement cs;
 
-        cs = connOracle.conn.prepareCall("BEGIN UPDT_FUNC_SENHA(?,?); END;");        
-       
+        cs = connOracle.conn.prepareCall("BEGIN UPDT_FUNC_SENHA(?,?); END;");
+
         cs.setString(1, f.getSenha());
         cs.setString(2, f.getEmail());
-        
+
         cs.execute();
         connOracle.desconectar();
+    }
+
+    public int getNivel(int _codFunc) throws SQLException {
+        int _nivel = 0;
+
+        connOracle.conectar();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT Cargo ");
+        sql.append("FROM Funcionario ");
+        sql.append("WHERE idfunc = ? ");
+
+        PreparedStatement pst = connOracle.conn.prepareStatement(sql.toString());
+        pst.setInt(1, _codFunc);
+        ResultSet resultado = pst.executeQuery();
+        resultado.next();
+
+        _nivel = resultado.getInt("Cargo");
+
+        connOracle.desconectar();
+        return _nivel;
+
     }
 
 }

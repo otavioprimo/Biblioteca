@@ -137,29 +137,31 @@ public class CtrlFuncionario {
         return senha;
     }
     
-    public static void editarSenhaComUsuario(String usuario,String senha){
+     public static int buscarId(String usuario) {
         Funcionario funcionario = new Funcionario();
         DaoFuncionario dao = new DaoFuncionario();
-        
+        int id = 0;
+
         try {
             funcionario.setLogin(usuario);
-            funcionario.setSenha(senha);
-            dao.editarSenhaComUsuario(funcionario);
+            id = dao.retornaId(funcionario);
         } catch (Exception e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "Erro ao tentar mudar a senha \n Por Favor tente novamente mais tarde \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao buscar id  \n" + e.getMessage());
         }
+
+        return id;
     }
-    
-     public static void editarSenhaComEmail(String email,String senha){
+
+    public static void editarSenhaComEmail(String email, String senha) {
         Funcionario funcionario = new Funcionario();
         DaoFuncionario dao = new DaoFuncionario();
-        
+
         try {
             funcionario.setEmail(email);
             funcionario.setSenha(senha);
             dao.editarSenhaComEmail(funcionario);
-            System.out.println("senha editada com sucesso " + senha);
+            //System.out.println("senha editada com sucesso " + senha);
         } catch (Exception e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao tentar mudar a senha \nPor Favor tente novamente mais tarde \n" + e.getMessage());
