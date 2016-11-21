@@ -98,12 +98,18 @@ public class ViewRecSenha extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String senhaPura = GeradorSenha.gerarSenha();
         String senhaCript = Criptografia.criptografar(senhaPura);
+        try {
+            //EnviarEmail enviar = new EnviarEmail();
+            boolean sucesso = CtrlFuncionario.editarSenhaComEmail(txtEmail.getText().trim(), senhaCript);
+            //enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", txtEmail.getText().trim(), "Sasad Biblioteca", "Nova Senha: " + senhaPura);
+            if (sucesso) {
+                System.out.println("Senha: " + senhaPura);
+                this.dispose();
+            }
 
-        //EnviarEmail enviar = new EnviarEmail();
-        CtrlFuncionario.editarSenhaComEmail(txtEmail.getText().trim(), senhaCript);
-        //enviar.Enviar("biblioteca.sasad@gmail.com", "sasad321", txtEmail.getText().trim(), "Sasad Biblioteca", "Nova Senha: " + senhaPura);
-        System.out.println("Senha: " + senhaPura);
-        this.dispose();
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

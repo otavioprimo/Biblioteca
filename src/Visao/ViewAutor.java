@@ -210,7 +210,7 @@ public class ViewAutor extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void brnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnSalvarActionPerformed
-        String mensagem = "Deseja salvar este Autor? \nNome: " + nomeAutor;
+        String mensagem = "Deseja salvar este Autor? \nNome: " + txtNomeAutor.getText();
         String titulo = "Salvar Autor";
         int resposta = JOptionPane.showConfirmDialog(null, mensagem, titulo, JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {

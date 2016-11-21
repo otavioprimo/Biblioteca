@@ -153,7 +153,8 @@ public class CtrlFuncionario {
         return id;
     }
 
-    public static void editarSenhaComEmail(String email, String senha) {
+    public static boolean editarSenhaComEmail(String email, String senha) {
+        
         Funcionario funcionario = new Funcionario();
         DaoFuncionario dao = new DaoFuncionario();
 
@@ -161,10 +162,12 @@ public class CtrlFuncionario {
             funcionario.setEmail(email);
             funcionario.setSenha(senha);
             dao.editarSenhaComEmail(funcionario);
+            return true;
             //System.out.println("senha editada com sucesso " + senha);
         } catch (Exception e) {
             Logger.getLogger(CtrlLog.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Erro ao tentar mudar a senha \nPor Favor tente novamente mais tarde \n" + e.getMessage());
+            return false;
         }
     }
 }
